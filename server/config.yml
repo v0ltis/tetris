@@ -1,0 +1,7 @@
+# database configuration
+database:
+  host: beryllium.cloud.voltis.me
+  port: 3306
+  user: u12_iKk3mX4DKW
+  password: 7sbhV.P7mGQwPwkxISKQTC^n
+  database: s12_tetris

@@ -10,12 +10,11 @@ font = pygame.font.Font(font_path , 40)
 
 class Button:
     
-    def __init__(self, x, y , height, width, text="Button", function = None, one_press = False):
-        self.x = x
-        self.y = y
+    def __init__(self, coords: typing.Tuple[float, float] , height:float, width:float, text:str="Button", funct:typing.Callable = None, one_press:bool = False):
+        self.x , self.y = coords
         self.height = height
         self.width = width
-        self.function = function
+        self.function = funct
         self.one_press = one_press
 
         self.button_surface = pygame.Surface((self.width, self.height))

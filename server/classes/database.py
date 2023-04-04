@@ -1,3 +1,4 @@
+from __future__ import annotations
 import mysql.connector
 from datetime import datetime
 import pydantic
@@ -12,15 +13,15 @@ class Database:
 
         self._cursor = None
 
-    def execute(self, request, params):
+    def _execute(self, request, params):
         self._cursor.execute(request, params)
         self._conn.commit()
 
-    def get (self, request, params):
+    def _get (self, request, params):
         self._cursor.execute(request, params)
         return self._cursor.fetchall()
 
-    def connect(self):
+    def connect(self) -> Database:
         self._conn = mysql.connector.connect(
             host = self._host,
             port = self._port,
@@ -30,7 +31,8 @@ class Database:
         )
 
         self._cursor = self._conn.cursor()
-
+        return self
+    
     def add_score(self, name:pydantic.constr(max_length=25), score:int, date:datetime, gamemode: int) -> None:
         """
         Add a score to the database
@@ -40,12 +42,13 @@ class Database:
         :param gamemode: The gamemode of the score performed
         :return:
         """
-        self.execute("INSERT INTO scores (username, score, date, gamemode) VALUES (%s, %s, %s, %s)", (name, score, date, gamemode))
+        self._execute("INSERT INTO scores (username, score, date, gamemode) VALUES (%s, %s, %s, %s)", (name, score, date, gamemode))
 
-    def get_scores(self, limit: pydantic.conint(ge=1, le=50)):
+    def get_scores(self, limit: pydantic.conint(ge=1, le=50), offset: pydantic.conint(ge=0) = 0):
         """
         Get the top scores from the database
         :param limit: The number of scores to get. Must be between 1 and 50
+        :param offset: The number of scores to skip. Must be greater than or equal to 0
         :return: A list of tuples containing the name, score and date of the scores
         """
-        return self.get("SELECT * FROM scores ORDER BY score DESC LIMIT %s", (limit,))
+        return self._get("SELECT * FROM scores ORDER BY score DESC LIMIT %s OFFSET %s", (limit, offset))

@@ -1,11 +1,17 @@
-# reading the yaml config file
-from yaml import load, Loader
-from server.classes.database import Database
+# import datetime that allow using time Object
+from datetime import datetime
+from tools.conf_load import load
+
+from classes.database import Database
 
 def connect() -> Database:
-    # reading the config file
-    with open("../config.yml", 'r') as ymlfile:
-        cfg = load(ymlfile, Loader=Loader)
+    """
+    Establish a connection to the database
+
+    Returns:
+        Database: The database object
+    """
+    cfg = load()
 
     # connecting to the database
 
@@ -13,8 +19,6 @@ def connect() -> Database:
         host = cfg['database']['host'],
         database = cfg['database']['database'],
         user = cfg['database']['user'],
-        password = ['database']['password'],
+        password = cfg['database']['password'],
         port = cfg['database']['port']
-    )
-
-x = connect()
+    ).connect()

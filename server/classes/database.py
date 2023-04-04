@@ -33,7 +33,7 @@ class Database:
         self._cursor = self._conn.cursor()
         return self
     
-    def add_score(self, name:pydantic.constr(max_length=25), score:int, date:datetime, gamemode: int) -> None:
+    def add_score(self, name:pydantic.constr(max_length=25), score:int, date:datetime, gamemode: int, duration: datetime) -> None:
         """
         Add a score to the database
         :param name: The name of the player. Must be between 1 and 25 characters.
@@ -42,7 +42,7 @@ class Database:
         :param gamemode: The gamemode of the score performed
         :return:
         """
-        self._execute("INSERT INTO scores (username, score, date, gamemode) VALUES (%s, %s, %s, %s)", (name, score, date, gamemode))
+        self._execute("INSERT INTO scores (username, score, date, gamemode, duration) VALUES (%s, %s, %s, %s, %s)", (name, score, date, gamemode, duration))
 
     def get_scores(self, limit: pydantic.conint(ge=1, le=50), offset: pydantic.conint(ge=0) = 0):
         """

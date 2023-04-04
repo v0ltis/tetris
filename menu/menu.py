@@ -52,9 +52,9 @@ def function():
 def quit_function():
     pygame.quit()
 
-button_play = Button(100, 500, 75, 400, "TEST", function)
-button_settings = Button(100, 600, 75, 400, "Settings", function)
-button_quit = Button(150, 700, 50, 300, "Quit", quit_function)
+button_play = Button( (100,500), 75, 400, "TEST", function())
+button_settings = Button((100, 600), 75, 400, "Settings", function)
+button_quit = Button((150, 700), 50, 300, "Quit", quit_function)
 
 while True:
     for event in pygame.event.get():

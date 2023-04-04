@@ -4,7 +4,9 @@ pygame.init()
 screen = pygame.display.set_mode((600,800))
 
 objects = []
-font = pygame.font.Font('tetris\\menu\\font\\upheavtt.ttf' , 40)
+
+font_path = file_path = os.path.dirname(sys.argv[0]) + "/font/upheavtt.ttf"
+font = pygame.font.Font(font_path , 40)
 
 class Button:
     

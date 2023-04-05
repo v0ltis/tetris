@@ -61,11 +61,11 @@ class Gamemode:
         Pauses the gamemode
         :return: None
         """
-        self.pause = time.time()
+        self.pause_time = time.time()
 
     def resume(self) -> None:
         """
         Resumes the gamemode
         :return: None
         """
-        self.duration += time.time() - self.pause
+        self.duration += time.time() - self.pause_time

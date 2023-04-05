@@ -1,3 +1,8 @@
+from typing import List
+
+from menu.classes.matrix import Matrix
+
+
 class Piece:
     def __init__(self, color, matrix):
         self.color = color
@@ -52,7 +57,10 @@ class Piece:
 
     def rotate(self) -> None:
         """
-        Rotate the piece of 90 degrees to the right, and update the matrix.
+        Rotate the shape of 90 degrees to the right, and update the matrix.
+
+        DO NOT CALL THIS FUNCTION DIRECTLY, USE matrix.rotate() INSTEAD.
+
         :return: None
         """
         """
@@ -68,7 +76,9 @@ class Piece:
 
     def unrotate(self) -> None:
         """
-        Rotate the piece of 90 degrees to the left, and update the matrix.
+        Rotate the shape of 90 degrees to the left, and update the matrix.
+
+        DO NOT CALL THIS FUNCTION DIRECTLY, USE matrix.rotate() INSTEAD.
         :return: None
         """
 

@@ -1,9 +1,27 @@
 import time
+from typing import List
+
+from menu.classes.piece import Piece
+
 
 class Gamemode:
+    """
+    Represents a gamemode Object.
+
+    :param name: The name of the gamemode
+    :param id: The id of the gamemode
+    :param default_speed: The default speed of the gamemode
+    :param speed_multiplier: The speed multiplier
+    :param speed_increment_every: How many rounds before the speed is incremented
+
+    :param pieces: The pieces of the gamemode
+    :param invisible_pieces: If, once the piece is placed, it should become invisible
+    """
     def __init__(self, name:str, id:int,
+
                  default_speed:int, speed_multiplier:float, speed_increment_every:int,
-                 pieces:list,invisible_pieces:bool=False
+
+                 pieces:List[Piece],invisible_pieces:bool=False
                  ):
         """
         Creates & setup a gamemode

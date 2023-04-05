@@ -33,7 +33,7 @@ class Button:
         mouse_pos = pygame.mouse.get_pos()
         if self.button_rect.collidepoint(mouse_pos):
             if pygame.mouse.get_pressed(num_buttons=3)[0]:
-                if not self.one_press:
+                if self.one_press:
                     self.function()
                 elif not self.already_pressed:
                     self.function()

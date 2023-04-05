@@ -4,17 +4,23 @@ from menu.classes.matrix import Matrix
 
 
 class Piece:
-    def __init__(self, color, matrix):
+    """
+    Represents a piece Object.
+
+    Thooses methods must NOT be called directly. Please, use the methods in the Matrix class instead.
+
+    :param color: the color of the piece
+    :param shape: the shape of the piece
+    :param matrix: the matrix of the game
+    """
+    def __init__(self, color, shape: List[List[int]], matrix: Matrix):
         self.color = color
         self.x = 5
         self.y = 0
 
         self.matrix = matrix
 
-        self.shape = [
-            [1, 1, 1],
-            [0, 1, 0]
-        ]
+        self.shape = shape
 
 
     def down(self) -> None:

@@ -1,5 +1,8 @@
 from typing import List, Tuple, Callable
 
+from menu.classes.matrix_case import Case
+
+#if TYPE_CHECKING:
 from menu.classes.piece import Piece
 
 class Matrix:
@@ -43,6 +46,37 @@ class Matrix:
         [ 1  0  0  0  0  0  0  0  0  0  0  1 ]
         [ 1  1  1  1  1  1  1  1  1  1  1  1 ] # bottom wall, no piece can go below this.
         """
+
+    # static method means we do not ask for the "self" element.
+    # "self" will not be given by python to the function.
+    @staticmethod
+    def _constructor() -> List[List[Case]]:
+        """
+        Generate the matrix. Could not use comprehensions because Case() would be duplicated over the lines.
+        :return: the matrix
+        """
+        matrix = []
+        for i in range(4):
+            # generate the piece spawning area with walls on each side
+            matrix.append([Case(1)] + [Case(-2) for _ in range(10)] + [Case(1)])
+
+        for i in range(22):
+            # generate the game area with walls on each side
+            matrix.append([Case(1)] + [Case(0) for _ in range(10)] + [Case(1)])
+
+        # generate the floor
+        matrix.append([Case(1) for _ in range(12)])
+
+        return matrix
+
+
+    def _print(self):
+        """
+        Print the matrix.
+        """
+        for row in self.last_legal:
+            print(row)
+
     def illegal(self):
         """
         Check if the piece is illegal, if so, return True.

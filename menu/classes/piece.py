@@ -1,6 +1,9 @@
-from typing import List
+from __future__ import annotations
 
-from menu.classes.matrix import Matrix
+from typing import List, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from menu.classes.matrix import Matrix
 
 
 class Piece:

@@ -128,7 +128,7 @@ class Matrix:
 
             return True
 
-    def rotate(self, piece: Piece) -> Tuple[bool, int, List[List[int]]]:
+    def rotate(self, piece: Piece) -> Tuple[bool, int, List[List[Case]]]:
         """
         Rotate the piece, if the move is illegal, then the piece is placed at the last legal position.
         :param piece: the piece to move
@@ -149,7 +149,7 @@ class Matrix:
 
         return is_accepted, self.check_full(), self.game_matrix()
 
-    def horizontal(self, function: Callable) -> Tuple[bool, int, List[List[int]]]:
+    def horizontal(self, function: Callable) -> Tuple[bool, int, List[List[Case]]]:
         """
         Move the piece horizontally, if the move is illegal, then the piece is placed at the last legal position.
 
@@ -172,7 +172,7 @@ class Matrix:
 
         return is_accepted, self.check_full(), self.game_matrix()
 
-    def right(self, piece: Piece) -> Tuple[bool, int, List[List[int]]]:
+    def right(self, piece: Piece) -> Tuple[bool, int, List[List[Case]]]:
         """
         Move the piece right, if the move is illegal, then the piece is placed at the last legal position.
         :param piece:
@@ -198,7 +198,7 @@ class Matrix:
 
         return accepted, 0, self.game_matrix()
 
-    def down(self, piece: Piece) -> Tuple[bool, int, List[List[int]]]:
+    def down(self, piece: Piece) -> Tuple[bool, int, List[List[Case]]]:
         """
         Move the piece down, if the move is illegal, then the piece is placed at the last legal position.
         :param piece: the piece to move
@@ -221,7 +221,7 @@ class Matrix:
         # return if the move has been accepted, the number of rows deleted, and the game matrix.
 
 
-    def game_matrix(self) -> List[List[int]]:
+    def game_matrix(self) -> List[List[Case]]:
         """
         Remove the walls, ceiling and floor from the matrix.
         :return: the game matrix without the walls, ceiling and floor.

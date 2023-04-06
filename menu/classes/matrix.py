@@ -1,9 +1,11 @@
-from typing import List, Tuple, Callable
+from typing import List, Tuple, Callable, TYPE_CHECKING
 
 from menu.classes.matrix_case import Case
 
-#if TYPE_CHECKING:
-from menu.classes.piece import Piece
+if TYPE_CHECKING:
+    from menu.classes.piece import Piece
+
+from copy import deepcopy
 
 class Matrix:
     """

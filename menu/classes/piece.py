@@ -13,6 +13,7 @@ class Piece:
     :param shape: the shape of the piece
     :param matrix: the matrix of the game
     """
+
     def __init__(self, color, shape: List[List[int]], matrix: Matrix):
         self.color = color
         self.x = 5
@@ -21,7 +22,6 @@ class Piece:
         self.matrix = matrix
 
         self.shape = shape
-
 
     def down(self) -> None:
         """
@@ -39,7 +39,7 @@ class Piece:
             for x in range(len(self.shape[y])):
                 self.matrix.grid[self.y + y][self.x + x] += self.shape[y][x]
 
-    def right (self) -> None:
+    def right(self) -> None:
         """
         Move the piece right.
         :return: None
@@ -50,7 +50,7 @@ class Piece:
             for x in range(len(self.shape[y])):
                 self.matrix.grid[self.y + y][self.x + x] += self.shape[y][x]
 
-    def left (self) -> None:
+    def left(self) -> None:
         """
         Move the piece left.
         :return: None

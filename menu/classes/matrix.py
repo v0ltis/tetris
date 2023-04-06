@@ -19,21 +19,11 @@ class Matrix:
     """
     def __init__(self):
         # generate the matrix
-        self.grid = [
-            [1] + [-2] * 10 + [1] for _ in range(4) # piece spawning area (4 rows, 10 columns + wall on each side)
-        ] + [
-            [1] + [0] * 10 + [1] for _ in range(22) # game area (22 rows, 10 columns + wall on each side)
-        ] + [
-            [1] * 12 # bottom wall (1 row, 10 columns + wall on each side)
-        ]
+        self.grid = self._constructor()
 
-        self.last_grid = [
-            column.copy() for column in self.grid
-        ]
+        self.last_grid = self._constructor()
 
-        self.last_legal = [
-            column.copy() for column in self.grid
-        ]
+        self.last_legal = self._constructor()
 
         """
         Matrix looks like this:

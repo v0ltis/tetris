@@ -1,3 +1,4 @@
+import random
 import time
 from typing import List
 
@@ -47,6 +48,9 @@ class Gamemode:
         self.round = 0
         self.duration = None
 
+        self.actual_piece = random.choice(self.pieces)
+        self.next_piece = random.choice(self.pieces)
+
 
     def start(self) -> None:
         """
@@ -59,6 +63,7 @@ class Gamemode:
         """
         Invoked after each round
         Updates the speed if needed
+        Updates the actual and next piece
         :return: None
         """
 
@@ -66,6 +71,9 @@ class Gamemode:
 
         if self.round % self.speed_increment_every == 0:
             self.speed *= self.speed_multiplier
+
+        self.actual_piece = self.next_piece
+        self.next_piece = random.choice(self.pieces)
 
     def get_time(self) -> float:
         """

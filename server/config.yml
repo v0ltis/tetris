@@ -5,3 +5,9 @@ database:
   user: u12_iKk3mX4DKW
   password: 7sbhV.P7mGQwPwkxISKQTC^n
   database: s12_tetris
+
+server:
+  # The port the server will listen on
+  port: 8000
+  # The address the server will listen on
+  host: 0.0.0.0

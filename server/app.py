@@ -1,10 +1,10 @@
 import uvicorn
 # uvicorn allows us to run the fastapi server
 
-from typing_extensions import Annotated
 from tools import DB_init as db_conn, conf_load as conf
 from fastapi import FastAPI, Response
 
+from math import ceil
 
 import server.classes.API as body
 
@@ -88,7 +88,7 @@ async def add_score(
 
         return Response(
             status_code = 400,
-            content = f'{{"response":"The timestamp is not valid. It must be between the 1st of January 1970 and the current date (actual timestamp: {data.date})"}}',
+            content = f'{{"response":"The timestamp is not valid. It must be between 0 and {ceil(datetime.datetime.now().timestamp())} (actual: {data.date})"}}',
             headers = {"Content-Type": "application/json"}
         )
 

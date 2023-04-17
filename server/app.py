@@ -1,5 +1,3 @@
-import re
-
 import uvicorn
 # uvicorn allows us to run the fastapi server
 
@@ -7,84 +5,129 @@ from typing_extensions import Annotated
 from tools import DB_init as db_conn, conf_load as conf
 from fastapi import FastAPI, Response
 
+
+import server.classes.API as body
+
+import datetime
+
 app = FastAPI()
 
 @app.get('/scores')
 async def get_scores(
-        # gt = greater than, lt = less than
-        quantity: int,
-        offset:int = 0,
-        gamemode:str = "all"):
+        data: body.GetScores):
     """
     Allow to get up to 50 entries from the database
-    :param quantity: The quantity of scores to get
-    :param offset: The index of the first score to get
-                    (Exemple: If index = 10 and quantity = 10,the function will return the scores from the 11th to the 20th included)
-    :param gamemode: The gamemode of the scores to get
-    :return:
+    :param data: The data of the request
+        contains:
+            - quantity: The number of scores to get (0 < int =< 50)
+            - offset: The number of scores to skip (0 <= int)
+            - gamemode: The gamemode id of the scores to get (str)
+
+    :return: The response of the server
     """
 
-    if not 0 < quantity <= 50:
-        return Response(status_code=416, content="The quantity of scores to get must be between 1 and 50 included")
+    if not 0 < data.quantity <= 50:
+        return Response(
+            status_code=416,
+            content='{"response":"The quantity of scores to get must be between 1 and 50 included"}',
+            headers={"Content-Type": "application/json"}
+                        )
         # Error 416: Requested Range Not Satisfiable (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/416)
 
-    elif offset < 0:
-        return Response(status_code=416, content="The offset must be greater than or equal to 0")
+    elif data.offset < 0:
+        return Response(
+            status_code=416,
+            content='{"response":"The offset must be greater than or equal to 0"}',
+            headers={"Content-Type": "application/json"}
+                        )
         # Error 416: Requested Range Not Satisfiable (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/416)
 
     else:
-
-        if gamemode == "all":
-            return db_conn.connect().get_scores(quantity, offset)
+        if data.gamemode == "all":
+            return db_conn.connect().get_scores(data.quantity, data.offset)
 
         else:
-            return db_conn.connect().get_scores(quantity, offset, gamemode)
+            return db_conn.connect().get_gamemode_scores(data.quantity, data.offset, data.gamemode)
 
 
 @app.post('/scores')
 async def add_score(
-        name: str,
-        score: int,
-        date: str,
-        gamemode: str,
-        duration: str):
+        data: body.PostScores
+    ):
     """
     Allow to add a score to the database
-    :param name: The name of the player
-    :param score: The score of the player
-    :param date: The date of the score
-    :param gamemode: The gamemode of the score performed
-    :param duration: The time it took to complete the game
-    :return:
+    :param data: The data of the score to add
+        contains:
+            - name: The name of the player (1 <= len(str) <= 25)
+            - score: The score of the player (0 <= int)
+            - date: The date of the score (float representing a timestamp)
+            - gamemode: The gamemode of the score (str)
+            - duration: The duration of the game (0 <= int representing the number of seconds elapsed)
+    :return: The response of the server
     """
 
-    if not 1 <= len(name) <= 25:
-        return Response(status_code=400, content=f"The name must be between 1 and 25 characters included (actual length: {len(name)})")
+    if not 1 <= len(data.name) <= 25:
+        return Response(
+            status_code = 400,
+            content = f'{{"response":"The name must be between 1 and 25 characters included (actual length: {len(data.name)})"}}',
+            headers = {"Content-Type": "application/json"}
+        )
         # Error 400: Bad Request (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400)
 
-    # check if the date is valid thanks to a regex
-    elif not re.match(
-            r"^((((19|[2-9]\d)\d{2})-(0[13578]|1[02])-(0[1-9]|[12]\d|3[01]))|(((19|[2-9]\d)\d{2})-(0[13456789]|1[012])-(0[1-9]|[12]\d|30))|(((19|[2-9]\d)\d{2})-02-(0[1-9]|1\d|2[0-8]))|(((1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))-02-29))$",
-            date):
-        """
-        This (awfull) regex validates dates in the YYYY-MM-DD format, taking into account leap years. It matches either one of the following patterns:
+    # check if the date is a valid timestamp float
 
-        Months with 31 days: (19|[2-9]\d)\d{2}-(0[13578]|1[02])-(0[1-9]|[12]\d|3[01])
-        Months with 30 days: (19|[2-9]\d)\d{2}-(0[13456789]|1[012])-(0[1-9]|[12]\d|30)
-        February: (19|[2-9]\d)\d{2}-02-(0[1-9]|1\d|2[0-8]) (for non-leap years)
-        or (1[6-9]|[2-9]\d)(0[48]|[2468][048]|[13579][26]|(16|[2468][048]|[3579][26])00)-02-29 (for leap years)
-        The regex starts and ends with ^ and $ respectively to match the entire string.
+
+    if  data.date < 0 or \
+        not datetime.datetime.fromtimestamp(data.date) < (datetime.datetime.now() + datetime.timedelta(minutes = 1)):
+        """
+        Check if the date is between the 1st of January 1970 and the current date
+        This allows us to avoid people from adding scores from the future
+        
+        A delay of 1 minute is added to the current date to avoid problems with time not beign perfectly synchronized between the server and the client
         """
 
-        return Response(status_code=400, content=f"The date must be in the YYYY-MM-DD format (actual date: {date}), and must be a valid date (leap years are taken into account)")
+        return Response(
+            status_code = 400,
+            content = f'{{"response":"The timestamp is not valid. It must be between the 1st of January 1970 and the current date (actual timestamp: {data.date})"}}',
+            headers = {"Content-Type": "application/json"}
+        )
+
+
+    if data.duration < 1 or \
+        not datetime.timedelta(seconds = data.duration) < datetime.timedelta(hours = 24):
+        """
+        Check if the duration is between 1 second and 24 hours
+        
+        This allow to prevent the addition of stupidly long or short durations
+        """
+
+        return Response(
+            status_code = 400,
+            content = f'{{"response":"The duration is not valid. It must be between 1 second and 24 hours (actual duration: {data.duration} seconds)"}}',
+            headers = {"Content-Type": "application/json"}
+        )
         # Error 400: Bad Request (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400)
 
-    elif not 0 <= score <= 999999999:
-        return Response(status_code=400, content=f"The score must be between 0 and 999999999 included (actual score: {score})")
+
+    elif not 0 <= data.score:
+        """
+        Don't allow negative scores
+        """
+        return Response(
+            status_code = 400,
+            content = f'{{"response":"The score must be greater than or equal to 0 (actual score: {data.score})"}}',
+            headers = {"Content-Type": "application/json"}
+        )
         # Error 400: Bad Request (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400)
 
     else:
-        pass
+        db_conn.connect().add_score(data.name, data.score, data.date, data.gamemode, data.duration)
+
+        return Response(
+            status_code = 202,
+            content = f'{{"response":"Score added successfully"}}',
+            headers = {"Content-Type": "application/json"}
+        )
 
 if __name__ == '__main__':
     # perform the connection to the database

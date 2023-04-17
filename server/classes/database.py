@@ -33,7 +33,7 @@ class Database:
         self._cursor = self._conn.cursor(dictionary=True)
         return self
     
-    def add_score(self, name:pydantic.constr(max_length=25), score:int, date:datetime, gamemode: int, duration: datetime) -> None:
+    def add_score(self, name:pydantic.constr(max_length=25), score:int, date:str, gamemode: int, duration: str) -> None:
         """
         Add a score to the database
         :param name: The name of the player. Must be between 1 and 25 characters.
@@ -43,7 +43,7 @@ class Database:
         :param duration: The time it took to complete the game
         :return:
         """
-        self._execute("INSERT INTO scores (username, score, date, gamemode, duration) VALUES (%s, %s, %s, %s, %s)", (name, score, date, gamemode, duration))
+        self._execute("INSERT INTO scores (username, score, date, gamemode_id, duration) VALUES (%s, %s, FROM_UNIXTIME(%s), %s, SEC_TO_TIME(%s))", (name, score, date, gamemode, duration))
 
     def get_scores(self, limit: pydantic.conint(ge=1, le=50), offset: pydantic.conint(ge=0) = 0) -> list[tuple[str, int, datetime]]:
         """
@@ -54,7 +54,7 @@ class Database:
         """
         return self._get("SELECT * FROM scores ORDER BY score DESC LIMIT %s OFFSET %s", (limit, offset))
 
-    def get_gamemode_scores(self, gamemode: str, limit: pydantic.conint(ge=1, le=50), offset: pydantic.conint(ge=0) = 0) -> list[tuple[str, int, datetime]]:
+    def get_gamemode_scores(self, limit: pydantic.conint(ge=1, le=50), offset: pydantic.conint(ge=0) = 0,  gamemode: str= None) -> list[tuple[str, int, datetime]]:
         """
         Get the top scores from the database
         :param gamemode: The gamemode of the scores to get
@@ -62,4 +62,4 @@ class Database:
         :param offset: The number of scores to skip. Must be greater than or equal to 0
         :return: A list of tuples containing the name, score and date of the scores
         """
-        return self._get("SELECT * FROM scores WHERE gamemode = %s ORDER BY score DESC LIMIT %s OFFSET %s", (gamemode, limit, offset))
+        return self._get("SELECT * FROM scores WHERE gamemode_id = %s ORDER BY score DESC LIMIT %s OFFSET %s", (gamemode, limit, offset))

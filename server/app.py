@@ -12,6 +12,54 @@ import datetime
 
 app = FastAPI()
 
+
+@app.get('/user')
+async def get_user_stats(
+        data: requestBody.GetUserStats) -> Response | list[dict]:
+    """
+    Allow to get the stats of a user (up to 50 entries)
+    :param data: The data of the request
+        contains:
+            - username: The username of the user (1 <= len(str) <= 25)
+            - gamemode: The gamemode id of the scores to get (str)
+            - quantity: The number of scores to get (0 < int =< 50)
+            - offset: The number of scores to skip (0 <= int)
+
+    :return: The response of the server
+    """
+
+    if not 0 < data.quantity <= 50:
+        return Response(
+            status_code=416,
+            content='{"response":"The quantity of scores to get must be between 1 and 50 included"}',
+            headers={"Content-Type": "application/json"}
+        )
+        # Error 416: Requested Range Not Satisfiable (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/416)
+
+    elif data.offset < 0:
+        return Response(
+            status_code=416,
+            content='{"response":"The offset must be greater than or equal to 0"}',
+            headers={"Content-Type": "application/json"}
+        )
+        # Error 416: Requested Range Not Satisfiable (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/416)
+
+    elif len(data.username) > 25:
+        return Response(
+            status_code=400,
+            content=f'{{"response":"The username must be between 1 and 25 characters included (actual length: {len(data.username)})"}}',
+            headers={"Content-Type": "application/json"}
+        )
+        # Error 400: Bad Request (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400)
+
+    else:
+        if data.gamemode == "all":
+            return dbConn.connect().get_user_stats(data.username, data.quantity, data.offset)
+
+        else:
+            return dbConn.connect().get_user_gamemode_stats(data.username, data.quantity, data.offset, data.gamemode)
+
+
 @app.get('/scores')
 async def get_scores(
         data: requestBody.GetScores) -> Response | list[dict]:

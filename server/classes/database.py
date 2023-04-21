@@ -5,6 +5,7 @@ import pydantic
 
 class Database:
     def __init__(self, host:str, database:str, user:str, password:str, port:int=3306) -> None:
+        self._conn = None
         self._host = host
         self._user = user
         self._password = password
@@ -33,7 +34,7 @@ class Database:
         self._cursor = self._conn.cursor(dictionary=True)
         return self
     
-    def add_score(self, name:pydantic.constr(max_length=25), score:int, date:str, gamemode: int, duration: str) -> None:
+    def add_score(self, name:str, score:int, date:str, gamemode: int, duration: str) -> None:
         """
         Add a score to the database
         :param name: The name of the player. Must be between 1 and 25 characters.
@@ -45,7 +46,7 @@ class Database:
         """
         self._execute("INSERT INTO scores (username, score, date, gamemode_id, duration) VALUES (%s, %s, FROM_UNIXTIME(%s), %s, SEC_TO_TIME(%s))", (name, score, date, gamemode, duration))
 
-    def get_scores(self, limit: pydantic.conint(ge=1, le=50), offset: pydantic.conint(ge=0) = 0) -> list[tuple[str, int, datetime]]:
+    def get_scores(self, limit: int, offset: int) -> list[tuple[str, int, datetime]]:
         """
         Get the top scores from the database
         :param limit: The number of scores to get. Must be between 1 and 50
@@ -54,7 +55,7 @@ class Database:
         """
         return self._get("SELECT * FROM scores ORDER BY score DESC LIMIT %s OFFSET %s", (limit, offset))
 
-    def get_gamemode_scores(self, limit: pydantic.conint(ge=1, le=50), offset: pydantic.conint(ge=0) = 0,  gamemode: str= None) -> list[tuple[str, int, datetime]]:
+    def get_gamemode_scores(self, limit: int, offset: int,  gamemode: str) -> list[tuple[str, int, datetime]]:
         """
         Get the top scores from the database
         :param gamemode: The gamemode of the scores to get

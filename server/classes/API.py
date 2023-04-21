@@ -8,6 +8,7 @@ class GetScores(BaseModel):
     offset: int = 0
     gamemode: str = "all"
 
+
 class PostScores(BaseModel):
     """
     The body of the POST request for scores

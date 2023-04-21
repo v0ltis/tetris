@@ -64,3 +64,28 @@ class Database:
         :return: A list of tuples containing the name, score and date of the scores
         """
         return self._get("SELECT * FROM scores WHERE gamemode_id = %s ORDER BY score DESC LIMIT %s OFFSET %s", (gamemode, limit, offset))
+
+    def get_user_stats(self, username: str, quantity: int, offset: int) -> list[tuple[str, int, datetime]]:
+        """
+        Get the stats of a user
+
+        :param username: The username of the user
+        :param quantity: The number of scores to get. Must be between 1 and 50
+        :param offset: The number of scores to skip. Must be greater than or equal to 0
+        :return: A list of tuples containing the name, score and date of the scores
+        """
+
+        return self._get("SELECT * FROM scores WHERE username = %s ORDER BY score DESC LIMIT %s OFFSET %s", (username, quantity, offset))
+
+    def get_user_gamemode_stats(self, username: str, quantity: int, offset: int, gamemode: str) -> list[tuple[str, int, datetime]]:
+        """
+        Get the stats of a user
+
+        :param username: The username of the user
+        :param quantity: The number of scores to get. Must be between 1 and 50
+        :param offset: The number of scores to skip. Must be greater than or equal to 0
+        :param gamemode: The gamemode of the scores to get
+        :return: A list of tuples containing the name, score and date of the scores
+        """
+
+        return self._get("SELECT * FROM scores WHERE username = %s AND gamemode_id = %s ORDER BY score DESC LIMIT %s OFFSET %s", (username, gamemode, quantity, offset))

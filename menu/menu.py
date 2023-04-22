@@ -5,15 +5,11 @@ import typing
 
 pygame.init()
 screen = pygame.display.set_mode((600,800))
-pygame.display.set_caption("Triste")
 
 objects = []
 
 font_path = file_path = os.path.dirname(sys.argv[0]) + "/font/upheavtt.ttf"
 font = pygame.font.Font(font_path , 40)
-
-bg_img = pygame.image.load("tetris\\menu\\image\\Logo.png")
-bg_img = pygame.transform.scale(bg_img,(600,800))
 
 class Button:
     
@@ -53,19 +49,12 @@ class Button:
 def function():
     print('It works')
 
-def settings():
-    screen.fill('black')
-    #Delete button ?
-
 def quit_function():
     pygame.quit()
 
-button_play = Button((100, 500), 75, 400, "Play", function)
-button_settings = Button((100, 600), 75, 400, "Settings", settings)
+button_play = Button( (100,500), 75, 400, "TEST", function)
+button_settings = Button((100, 600), 75, 400, "Settings", function)
 button_quit = Button((150, 700), 50, 300, "Quit", quit_function)
-
-screen.fill("blue")
-screen.blit(bg_img,(0,0))
 
 while True:
     for event in pygame.event.get():

@@ -12,7 +12,7 @@ def setting():
     pygame.init()
 
     screen = pygame.display.set_mode((600,800))
-    pygame.display.set_caption("Settings")
+    pygame.display.set_caption("Triste")
 
     button_play = Button((150, 550), 50, 300, "Play", test)
     button_quit = Button((150, 700), 50, 300, "Quit", quit_function)

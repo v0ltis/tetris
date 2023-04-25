@@ -11,7 +11,7 @@ mixer.init()
 screen = pygame.display.set_mode((600,800))
 pygame.display.set_caption("Triste")
 
-mixer.music.load(os.path.dirname(sys.argv[0]) + "/original-tetris-theme-tetris-soundtrack.mp3")
+mixer.music.load(os.path.dirname(sys.argv[0]) + "music/original-tetris-theme-tetris-soundtrack.mp3")
 mixer.music.set_volume(0.5)
 mixer.music.play(-1)
 font_path = file_path = os.path.dirname(sys.argv[0]) + "/font/upheavtt.ttf"

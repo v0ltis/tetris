@@ -13,7 +13,7 @@ class GamemodeLauncher:
             raise IndexError("Gamemode index out of range")
 
         # Convert the list of shapes index into a valid list of shapes
-        list_pieces = [config["shapes"][shape_index] for shape_index in raw_gamemode["pieces"]]
+        list_pieces = [config["shapes"][shape_index] for shape_index in raw_gamemode["shapes"]]
 
         self.gamemode = Gamemode(
             name=raw_gamemode["name"],
@@ -23,7 +23,7 @@ class GamemodeLauncher:
             speed_increment_every=raw_gamemode["speed_increment_every"],
             max_speed=raw_gamemode["max_speed"],
             pieces=list_pieces,
-            invisible_pieces=raw_gamemode["invisible_pieces"],
+            invisible_pieces=raw_gamemode["invisible"],
             xp_multiplier=raw_gamemode["xp_multiplier"]
         )
 

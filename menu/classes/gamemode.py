@@ -18,11 +18,10 @@ class Gamemode:
     :param pieces: The pieces of the gamemode
     :param invisible_pieces: If, once the piece is placed, it should become invisible
     """
-    def __init__(self, name:str, id:int,
 
-                 default_speed:int, speed_multiplier:float, speed_increment_every:int,
-
-                 pieces:List[Piece],invisible_pieces:bool=False
+    def __init__(self, name: str, id: int,
+                 default_speed: int, speed_multiplier: float, speed_increment_every: int, max_speed: int,
+                 pieces: List[Piece], invisible_pieces: bool = False, xp_multiplier: float = 1.0
                  ):
         """
         Creates & setup a gamemode
@@ -40,6 +39,7 @@ class Gamemode:
         self.speed = default_speed
         self.speed_multiplier = speed_multiplier
         self.speed_increment_every = speed_increment_every
+        self.max_speed = max_speed
 
         self.invisible_pieces = invisible_pieces
         self.pieces = pieces
@@ -51,6 +51,7 @@ class Gamemode:
         self.actual_piece = random.choice(self.pieces)
         self.next_piece = random.choice(self.pieces)
 
+        self.pause_time = None
 
     def start(self) -> None:
         """
@@ -71,6 +72,9 @@ class Gamemode:
 
         if self.round % self.speed_increment_every == 0:
             self.speed *= self.speed_multiplier
+
+            if self.speed > self.max_speed:
+                self.speed = self.max_speed
 
         self.actual_piece = self.next_piece
         self.next_piece = random.choice(self.pieces)

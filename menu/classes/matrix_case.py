@@ -1,10 +1,11 @@
 from __future__ import annotations
 
-# A matrix case is a kind of int that can be used to represent a case in the matrix, but also contain the color of the piece that is in this case.
+# A matrix case is a kind of int that can be used to represent a case in the matrix,
+# but also contain the color of the piece that is in this case.
 from typing import Tuple
 
 # allow to copy every objects
-from copy import deepcopy, copy
+from copy import deepcopy
 
 
 class Case:

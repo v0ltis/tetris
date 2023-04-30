@@ -2,12 +2,12 @@ import pygame
 
 
 class GameInterface:
-    def __init__(self, data):
-        self.data = data
+    def __init__(self, gamemode):
+        self.gamemode = gamemode
 
     def process(self):
         pygame.init()
-        screen = pygame.display.set_mode((600,800))
+        screen = pygame.display.set_mode((600, 800))
         pygame.display.set_caption("Triste")
 
         color = (128, 128, 128)

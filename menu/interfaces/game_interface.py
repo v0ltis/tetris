@@ -21,3 +21,5 @@ class GameInterface:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
+
+    # TODO: CONNECT THE GAMEMODE CLASS TO THE INTERFACE, SO THE GAMEMODE LOGIC IS EXECUTED IN THE WHILE LOOP

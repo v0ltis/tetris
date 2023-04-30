@@ -1,6 +1,7 @@
 import pygame
 from menu.classes.button import Button
 from menu.interfaces.menu_heritage_sample import MenuHeritage
+from menu.classes.launch_gamemode import GamemodeLauncher
 
 
 class GameChoice(MenuHeritage):
@@ -21,17 +22,17 @@ class GameChoice(MenuHeritage):
 
         basic_mode = Button(
             coords=(20, 300), height=200, width=250, font=self.menu.button_font,
-            text="Basic Mode", funct=lambda: None, screen=self.menu.screen
+            text="Basic Mode", funct=lambda: GamemodeLauncher(0), screen=self.menu.screen
         )
 
         hard_mode = Button(
             coords=(330, 50), height=200, width=250, font=self.menu.button_font,
-            text="Hard Mode", funct=lambda: None, screen=self.menu.screen
+            text="Blitz", funct=lambda: GamemodeLauncher(2), screen=self.menu.screen
         )
 
         wtf = Button(
             coords=(330, 300), height=200, width=250, font=self.menu.button_font,
-            text="Impossible Mode", funct=lambda: None, screen=self.menu.screen
+            text="Invisible", funct=lambda: GamemodeLauncher(1), screen=self.menu.screen
         )
 
         button_quit = Button(

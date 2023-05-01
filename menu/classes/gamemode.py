@@ -41,15 +41,15 @@ class Gamemode:
         self.speed_increment_every = speed_increment_every
         self.max_speed = max_speed
 
-        self.invisible_pieces = invisible_pieces
-        self.pieces = pieces
+        self.invisible_pieces: bool = invisible_pieces
+        self.pieces: List[Piece] = pieces
 
         self.score = 0
         self.round = 0
         self.duration = None
 
-        self.actual_piece = random.choice(self.pieces)
-        self.next_piece = random.choice(self.pieces)
+        self.actual_piece: Piece = random.choice(self.pieces)
+        self.next_piece: Piece = random.choice(self.pieces)
 
         self.pause_time = None
 

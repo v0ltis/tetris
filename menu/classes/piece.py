@@ -18,7 +18,8 @@ class Piece:
     """
 
     def __init__(self, color, shape: List[List[int]], matrix: Matrix):
-        self.color = color
+        self.color = color # 0xRRGGBB color format (hexadecimal)
+
         self.x = 5
         self.y = 0
 

@@ -1,11 +1,16 @@
 from menu.tools.cnf_load import load as cnf_load
 from menu.classes.gamemode import Gamemode
 from menu.interfaces.game_interface import GameInterface
-
+from menu.classes.piece import Piece
+from menu.classes.matrix import Matrix
 
 class GamemodeLauncher:
     def __init__(self, gamemode_index: int):
+        self.matrix = Matrix()
+
         config = cnf_load()
+
+        shapes = config["shapes"]
 
         try:
             raw_gamemode = config["gamemodes"][gamemode_index]
@@ -13,7 +18,9 @@ class GamemodeLauncher:
             raise IndexError("Gamemode index out of range")
 
         # Convert the list of shapes index into a valid list of shapes
-        list_pieces = [config["shapes"][shape_index] for shape_index in raw_gamemode["shapes"]]
+        list_pieces = [
+            Piece(shapes[shape_index]["scheme"], shapes[shape_index]["color"], self.matrix) for shape_index in raw_gamemode["shapes"]
+        ]
 
         self.gamemode = Gamemode(
             name=raw_gamemode["name"],

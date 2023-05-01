@@ -1,8 +1,9 @@
 import pygame
+from menu.classes.gamemode import Gamemode
 
 
 class GameInterface:
-    def __init__(self, gamemode):
+    def __init__(self, gamemode: Gamemode, matrix):
         self.gamemode = gamemode
 
     def process(self):

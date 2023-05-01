@@ -210,6 +210,18 @@ class Matrix:
         return is_accepted, self.check_full(), self.game_matrix()
         # return if the move has been accepted, the number of rows deleted, and the game matrix.
 
+    def drop(self, piece: Piece) -> Tuple[bool, int, List[List[Case]]]:
+        """
+        Drop the piece, if the move is illegal, then the piece is placed at the last legal position.
+        :param piece: the piece to move
+        :return: if the move has been accepted, the number of rows deleted, and the game matrix.
+        """
+        while not self.check_move():
+            piece.down()
+
+        self.last_grid = deepcopy(self.grid)
+
+        return True, self.check_full(), self.game_matrix()
 
     def game_matrix(self) -> List[List[Case]]:
         """

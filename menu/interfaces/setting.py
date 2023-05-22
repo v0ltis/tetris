@@ -1,6 +1,6 @@
 import pygame
-from menu.classes.button import Button
-from menu.interfaces.menu_heritage_sample import MenuHeritage
+from classes.button import Button
+from interfaces.menu_heritage_sample import MenuHeritage
 
 
 class Settings(MenuHeritage):

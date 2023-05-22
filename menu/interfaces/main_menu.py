@@ -1,8 +1,8 @@
 import pygame
 
-from menu.interfaces.setting import Settings
-from menu.classes.button import Button
-from menu.interfaces.game_choice import GameChoice
+from interfaces.setting import Settings
+from classes.button import Button
+from interfaces.game_choice import GameChoice
 
 
 class Menu:

@@ -5,7 +5,7 @@ import os
 sys.path.append(os.getcwd())
 print(sys.path)
 print(os.getcwd())
-from menu.interfaces.main_menu import Menu
+from interfaces.main_menu import Menu
 
 
 def start():

@@ -1,8 +1,8 @@
-from menu.tools.cnf_load import load as cnf_load
-from menu.classes.gamemode import Gamemode
-from menu.interfaces.game_interface import GameInterface
-from menu.classes.piece import Piece
-from menu.classes.matrix import Matrix
+from tools.cnf_load import load as cnf_load
+from classes.gamemode import Gamemode
+from interfaces.game_interface import GameInterface
+from classes.piece import Piece
+from classes.matrix import Matrix
 
 class GamemodeLauncher:
     def __init__(self, gamemode_index: int):

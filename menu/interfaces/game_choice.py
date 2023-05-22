@@ -1,7 +1,7 @@
 import pygame
-from menu.classes.button import Button
-from menu.interfaces.menu_heritage_sample import MenuHeritage
-from menu.classes.launch_gamemode import GamemodeLauncher
+from classes.button import Button
+from interfaces.menu_heritage_sample import MenuHeritage
+from classes.launch_gamemode import GamemodeLauncher
 
 
 class GameChoice(MenuHeritage):

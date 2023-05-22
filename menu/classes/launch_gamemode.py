@@ -19,7 +19,7 @@ class GamemodeLauncher:
 
         # Convert the list of shapes index into a valid list of shapes
         list_pieces = [
-            Piece(shapes[shape_index]["scheme"], shapes[shape_index]["color"], self.matrix) for shape_index in raw_gamemode["shapes"]
+            Piece(shapes[shape_index]["color"], shapes[shape_index]["scheme"], self.matrix) for shape_index in raw_gamemode["shapes"]
         ]
 
         self.gamemode = Gamemode(
@@ -37,6 +37,6 @@ class GamemodeLauncher:
     def launch(self):
         self.gamemode.start()
 
-        game_interface = GameInterface(self.gamemode)
+        game_interface = GameInterface(self.gamemode, self.matrix)
 
         game_interface.process()

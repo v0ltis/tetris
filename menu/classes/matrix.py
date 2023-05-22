@@ -1,8 +1,8 @@
 from typing import List, Tuple, Callable, TYPE_CHECKING
 
-from menu.classes.matrix_case import Case
+from classes.matrix_case import Case
 
-from menu.classes.piece import Piece
+from classes.piece import Piece
 
 from copy import deepcopy
 

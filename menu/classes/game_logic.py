@@ -1,5 +1,5 @@
-from menu.classes.gamemode import Gamemode
-from menu.interfaces.game_interface import GameInterface
+from classes.gamemode import Gamemode
+from interfaces.game_interface import GameInterface
 import pygame
 
 

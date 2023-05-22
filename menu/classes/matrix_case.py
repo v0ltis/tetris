@@ -9,7 +9,7 @@ from copy import deepcopy
 
 
 class Case:
-    def __init__(self, value: int = 0, color: Tuple[int, int, int] = (0, 0, 0)):
+    def __init__(self, value: int = 0, color: Tuple[int, int, int] = (128, 128, 128)):
         self.value = value
         self.color = color
 

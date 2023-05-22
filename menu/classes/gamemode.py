@@ -2,7 +2,7 @@ import random
 import time
 from typing import List
 
-from menu.classes.piece import Piece
+from classes.piece import Piece
 
 
 class Gamemode:

@@ -2,11 +2,14 @@ import pygame
 from pygame import mixer
 import sys
 import os
-
-from interfaces.main_menu import Menu
+sys.path.append(os.getcwd())
+print(sys.path)
+print(os.getcwd())
+from menu.interfaces.main_menu import Menu
 
 
 def start():
+
     # Initialize pygame & mixer:
     pygame.init()
     mixer.init()

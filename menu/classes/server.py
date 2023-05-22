@@ -1,4 +1,4 @@
-from menu.tools import cnf_load as config
+from tools import cnf_load as config
 from datetime import datetime
 import requests
 

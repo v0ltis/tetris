@@ -85,6 +85,13 @@ class Gamemode:
         :return: float
         """
         return time.time() - self.duration
+    
+    def get_score(self) -> int:
+        """
+        Returns the score
+        :return: int
+        """
+        return self.score
 
     def pause(self) -> None:
         """

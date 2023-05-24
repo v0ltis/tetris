@@ -30,7 +30,7 @@ class GameLogic:
                 if event.key == pygame.K_UP:
                     self.matrix.rotate()
 
-                if event.key == pygame.K_SPACE:
+                if event.key == pygame.K_DOWN:
                     self.matrix.drop()
 
                 if event.key == pygame.K_ESCAPE:

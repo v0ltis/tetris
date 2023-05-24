@@ -44,8 +44,8 @@ class GameInterface:
             self.display_tetris_text(self.font, str(int(self.gamemode.get_time())), (475, 600), (255,255,255))
             self.matrix.down(self.gamemode.actual_piece)
             pygame.display.flip()
-            sleep(1)
-            
+            sleep(0.2)
+            self.controll_down()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -53,7 +53,7 @@ class GameInterface:
 
     # TODO: CONNECT THE GAMEMODE CLASS TO THE INTERFACE, SO THE GAMEMODE LOGIC IS EXECUTED IN THE WHILE LOOP
 
-    # Draw the grid
+    # Draw the grid and the actual piece
     def display_grid(self):
         grid = self.matrix.game_matrix()
         for x in range(22):
@@ -65,17 +65,8 @@ class GameInterface:
                 if box == 1:
                     pygame.draw.rect(self.screen, self.gamemode.actual_piece.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
 
-    # Make the pieces appear on the screen
-    # def display_piece(self):
-    #     shape = self.gamemode.actual_piece.shape
-    #     piece = self.gamemode.actual_piece
-
-    #     for x in range(len(shape)):
-    #         for y in range(len(shape[x])):
-    #             case_x = 100 + x*31
-    #             case_y = 30 + y*31
-    #             if shape[x][y] == 1:
-    #                 pygame.draw.rect(self.screen, piece.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
-
-    def game_loop(self):
-        pass
+    def controll_down(self):
+        grid = self.matrix.game_matrix()
+        for y in range(10):
+            if grid[21][y] == 1:
+                self.gamemode.next_round()

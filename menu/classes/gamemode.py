@@ -76,6 +76,8 @@ class Gamemode:
             if self.speed > self.max_speed:
                 self.speed = self.max_speed
 
+        # reset x & y pointers.
+        self.actual_piece.reset()
         self.actual_piece = self.next_piece
         self.next_piece = random.choice(self.pieces)
 

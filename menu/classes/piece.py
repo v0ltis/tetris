@@ -27,6 +27,10 @@ class Piece:
 
         self.shape = shape
 
+    def reset(self):
+        self.x = 5
+        self.y = 0
+
     def down(self) -> None:
         """
         Move the piece down, if it can't move down, then it is placed in the matrix.
@@ -38,7 +42,6 @@ class Piece:
         # add the piece to the matrix at coords
         # piece shape can be 4x1 , 3x2, 2x3 or 1x4 matrix
         # coords are the coordinates of the top left corner of the piece
-        print(self.shape)
         for y in range(len(self.shape)):
             for x in range(len(self.shape[y])):
                 self.matrix.grid[self.y + y][self.x + x] += self.shape[y][x]

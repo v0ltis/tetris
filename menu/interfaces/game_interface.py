@@ -56,6 +56,8 @@ class GameInterface:
     # Draw the grid and the actual piece
     def display_grid(self):
         grid = self.matrix.game_matrix()
+        print(self.matrix.grid)# Pour tests
+        print("\n\n\n" + "=" * 10 + "\n\n\n")
         for x in range(22):
             for y in range(10):
                 box = grid[x][y]

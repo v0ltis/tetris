@@ -75,6 +75,7 @@ class Matrix:
                     to go through another piece or the wall or floor wich is illegal.
         :return: True if the piece is illegal, False otherwise
         """
+        if any(2 in row for row in self.grid) : print("ATTENTION")
         return any(2 in row for row in self.grid)
 
     def loose(self):
@@ -205,7 +206,7 @@ class Matrix:
 
         if not is_accepted:
             # the grid is now the last legal grid
-            self.last_grid = deepcopy(self.grid)
+            self.grid = deepcopy(self.last_legal)
 
         return is_accepted, self.check_full(), self.game_matrix()
         # return if the move has been accepted, the number of rows deleted, and the game matrix.

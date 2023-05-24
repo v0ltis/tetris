@@ -1,4 +1,5 @@
 import pygame
+from time import sleep
 from classes.gamemode import Gamemode
 import os
 import sys
@@ -35,15 +36,15 @@ class GameInterface:
         self.display_tetris_text(self.font, "Time", (475, 550), (255,255,255))
         self.display_tetris_text(self.font, "Score", (475, 650), (255,255,255))
 
-        self.display_piece()
         while True:
             self.display_grid()
-            self.display_piece()
             pygame.draw.rect(self.screen, (0,0,0), pygame.Rect(400, 675, 150, 50 ))
             self.display_tetris_text(self.font, str(self.gamemode.get_score()), (475, 700), (255,255,255))
             pygame.draw.rect(self.screen, (0,0,0), pygame.Rect(400, 575, 150, 50 ))
             self.display_tetris_text(self.font, str(int(self.gamemode.get_time())), (475, 600), (255,255,255))
+            self.matrix.down(self.gamemode.actual_piece)
             pygame.display.flip()
+            sleep(1)
             
 
             for event in pygame.event.get():
@@ -61,18 +62,20 @@ class GameInterface:
                 case_x = 100 + x*31 
                 case_y = 30 + y*31
                 pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
+                if box == 1:
+                    pygame.draw.rect(self.screen, self.gamemode.actual_piece.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
 
     # Make the pieces appear on the screen
-    def display_piece(self):
-        shape = self.gamemode.actual_piece.shape
-        piece = self.gamemode.actual_piece
+    # def display_piece(self):
+    #     shape = self.gamemode.actual_piece.shape
+    #     piece = self.gamemode.actual_piece
 
-        for x in range(len(shape)):
-            for y in range(len(shape[x])):
-                case_x = 100 + x*31
-                case_y = 30 + y*31
-                if shape[x][y] == 1:
-                    pygame.draw.rect(self.screen, piece.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
+    #     for x in range(len(shape)):
+    #         for y in range(len(shape[x])):
+    #             case_x = 100 + x*31
+    #             case_y = 30 + y*31
+    #             if shape[x][y] == 1:
+    #                 pygame.draw.rect(self.screen, piece.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
 
     def game_loop(self):
         pass

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import uvicorn
 # uvicorn allows us to run the fastapi server
 

@@ -3,6 +3,7 @@ from time import sleep
 from classes.gamemode import Gamemode
 import os
 import sys
+from interfaces.death_screen import DeathScreen
 #from classes.game_logic import GameLogic
 
 
@@ -84,19 +85,13 @@ class GameInterface:
                 case_x = 100 + x*31 
                 case_y = 30 + y*31
                 pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
+                # If the value on the grid equal 1, apply the color of the piece
                 if box == 1:
                     if self.gamemode.invisible_pieces:
                         if box.color == self.gamemode.actual_piece.color:
                             pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
                     else:
                         pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
-
-    def control_down(self):
-        # if the piece is placed
-        can_still_be_moved, _, _ = self.matrix.down(self.gamemode.actual_piece)
-        # if the piece is placed, we go to the next round.
-        if not can_still_be_moved:
-            self.gamemode.next_round()
 
         # display the next piece
         color_next = (72, 72, 72)
@@ -144,6 +139,3 @@ class GameInterface:
 
             elif event.type == pygame.QUIT:
                 pygame.quit()
-
-    #def death(self):
-    #    self.death_screen.DeathScreen.process()

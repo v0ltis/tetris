@@ -13,7 +13,6 @@ class Settings(MenuHeritage):
         self.menu.screen = pygame.display.set_mode((600, 800))
         pygame.display.set_caption("triste")
 
-        # button_play = Button((150, 550), 50, 300, "Play", test)
         button_play = Button(
             coords=(150, 550), height=50, width=300, font=self.menu.button_font,
             text="Play", funct=self.menu.game, screen=self.menu.screen

@@ -17,7 +17,7 @@ class GameChoice(MenuHeritage):
 
         one_piece = Button(
             coords=(20, 50), height=200, width=250, font=self.menu.button_font,
-            text="One Piece", funct=lambda: None, screen=self.menu.screen
+            text="One Piece", funct=lambda: GamemodeLauncher(3).launch(), screen=self.menu.screen
         )
 
         basic_mode = Button(
@@ -30,9 +30,14 @@ class GameChoice(MenuHeritage):
             text="Blitz", funct=lambda: GamemodeLauncher(2).launch(), screen=self.menu.screen
         )
 
-        wtf = Button(
+        one_color = Button(
             coords=(330, 300), height=200, width=250, font=self.menu.button_font,
-            text="Invisible", funct=lambda: GamemodeLauncher(1).launch(), screen=self.menu.screen
+            text="One Color", funct=lambda: GamemodeLauncher(1).launch(), screen=self.menu.screen
+        )
+
+        extended = Button(
+            coords=(20, 550), height=200, width=250, font=self.menu.button_font,
+            text="Extended", funct=lambda: GamemodeLauncher(4).launch(), screen=self.menu.screen
         )
 
         button_quit = Button(
@@ -40,7 +45,7 @@ class GameChoice(MenuHeritage):
             text="Quit", funct=self.quit_function, screen=self.menu.screen
         )
 
-        self.menu.objects = [one_piece, basic_mode, hard_mode, wtf, button_quit]
+        self.menu.objects = [one_piece, basic_mode, hard_mode, one_color, extended, button_quit]
 
         while True:
             for event in pygame.event.get():

@@ -98,7 +98,7 @@ gamemodes:
         invisible: 0
         xp_multiplier: 1
     -
-        name: "Invisible"
+        name: "One Color"
         id: "invisible"
         default_speed: 1
         speed_multiplier: 1.25
@@ -118,3 +118,24 @@ gamemodes:
         shapes: [0, 1, 2, 3, 4, 5, 6]
         invisible: 0
         xp_multiplier: 2.5
+
+    -
+        name: "One Piece"
+        id: "one_piece"
+        default_speed: 1
+        speed_multiplier: 1.5
+        speed_increment_every: 8
+        max_speed: 13
+        shapes: [0]
+        invisible: 0
+        xp_multiplier: 1
+
+    - name: "Extended"
+      id: "extended"
+      default_speed: 1
+      speed_multiplier: 1.5
+      speed_increment_every: 10
+      max_speed: 10
+      shapes: [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      invisible: 0
+      xp_multiplier: 1

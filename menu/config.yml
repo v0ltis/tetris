@@ -95,7 +95,7 @@ gamemodes:
         speed_increment_every: 10
         max_speed: 10
         shapes: [0, 1, 2, 3, 4, 5, 6] # represents the index of the shape in the shapes list
-        invisible: false
+        invisible: 0
         xp_multiplier: 1
     -
         name: "Invisible"
@@ -105,7 +105,7 @@ gamemodes:
         max_speed: 7
         speed_increment_every: 12
         shapes: [0, 1, 2, 3, 4, 5, 6]
-        invisible: true
+        invisible: 1
         xp_multiplier: 1.5
 
     -
@@ -116,5 +116,5 @@ gamemodes:
         max_speed: 25
         speed_increment_every: 1
         shapes: [0, 1, 2, 3, 4, 5, 6]
-        invisible: false
+        invisible: 0
         xp_multiplier: 2.5

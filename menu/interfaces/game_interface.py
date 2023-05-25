@@ -26,31 +26,47 @@ class GameInterface:
 
     # Draw the board to play on
     def process(self):
-        pygame.init()
-        self.screen = pygame.display.set_mode((600, 800))
-        pygame.display.set_caption("Triste")
 
-        color_next = (72, 72, 72)
-        pygame.draw.rect(self.screen, color_next, pygame.Rect(375,100,200,150))
-        self.display_tetris_text(self.font, "NEXT PIECE", (475, 275), (255,255,255))
-        self.display_tetris_text(self.font, "Time", (475, 550), (255,255,255))
-        self.display_tetris_text(self.font, "Score", (475, 650), (255,255,255))
+        # Initialize the interface
+        self.init_display()
 
         while True:
             self.display_grid()
+
+            # Prevent text from overlapping
+            # this one is the score
             pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(400, 675, 150, 50))
-            self.display_tetris_text(self.font, str(self.gamemode.get_score()), (475, 700), (255,255,255))
+            self.display_tetris_text(self.font, str(self.gamemode.get_score()), (475, 700), (255, 255, 255))
+
+            # and this one is the time
             pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(400, 575, 150, 50))
             self.display_tetris_text(self.font, str(int(self.gamemode.get_time())), (475, 600), (255,255,255))
             pygame.display.flip()
             sleep(0.2)
-            self.control_down()
 
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
+            if self.gamemode.should_go_down():
+                is_not_placed, _, _ = self.matrix.down(self.gamemode.actual_piece)
+
+                if not is_not_placed:
+                    self.gamemode.next_round()
+
+            self.controll()
 
     # TODO: CONNECT THE GAMEMODE CLASS TO THE INTERFACE, SO THE GAMEMODE LOGIC IS EXECUTED IN THE WHILE LOOP
+
+    def init_display(self):
+        pygame.init()
+        self.screen = pygame.display.set_mode((600, 800))
+        pygame.display.set_caption("Triste")
+
+        # next-piece rectangle
+        color_next = (72, 72, 72)
+        pygame.draw.rect(self.screen, color_next, pygame.Rect(375, 100, 200, 150))
+
+        # texts
+        self.display_tetris_text(self.font, "NEXT PIECE", (475, 275), (255,255,255))
+        self.display_tetris_text(self.font, "Time", (475, 550), (255,255,255))
+        self.display_tetris_text(self.font, "Score", (475, 650), (255,255,255))
 
     # Draw the grid and the actual piece
     # TODO: DOCUMENTATION!!!!!!!!!!!!!!!!!!!
@@ -71,3 +87,50 @@ class GameInterface:
         # if the piece is placed, we go to the next round.
         if not can_still_be_moved:
             self.gamemode.next_round()
+
+        # display the next piece
+        color_next = (72, 72, 72)
+        pygame.draw.rect(self.screen, color_next, pygame.Rect(375, 100, 200, 150))
+
+        next_piece = self.gamemode.next_piece
+        for x in range(len(next_piece.display_shape)):
+            for y in range(len(next_piece.display_shape[x])):
+                if next_piece.display_shape[x][y] == 1:
+                    pygame.draw.rect(self.screen, next_piece.color, pygame.Rect(430 + 31 * x, 130 + 31 * y, 29.5, 29.5))
+
+    def controll(self):
+
+        piece = self.gamemode.actual_piece
+
+        for event in pygame.event.get():
+
+            if event.type == pygame.KEYDOWN:
+
+                is_not_placed = None
+
+                if event.key == pygame.K_LEFT:
+                    self.matrix.left(piece)
+
+                elif event.key == pygame.K_RIGHT:
+                    self.matrix.right(piece)
+
+                elif event.key == pygame.K_UP:
+                    self.matrix.rotate(piece)
+
+                elif event.key == pygame.K_DOWN:
+                    is_not_placed, _, _ = self.matrix.down(piece)
+
+                elif event.key == pygame.K_SPACE:
+                    is_not_placed, _, _ = self.matrix.drop(piece)
+
+                elif event.key == pygame.K_ESCAPE:
+                    return "pause"
+
+                if is_not_placed is False:
+                    self.gamemode.next_round()
+
+            elif event.type == pygame.QUIT:
+                pygame.quit()
+
+    #def death(self):
+    #    self.death_screen.DeathScreen.process()

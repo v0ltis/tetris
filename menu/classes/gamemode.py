@@ -53,12 +53,16 @@ class Gamemode:
 
         self.pause_time = None
 
+        self.next_go_down = 0
+
     def start(self) -> None:
         """
         Starts the gamemode
         :return: None
         """
         self.duration = time.time()
+
+        self.next_go_down = time.time() + (0.4 + 1 / self.speed)
 
     def next_round(self) -> None:
         """
@@ -108,3 +112,17 @@ class Gamemode:
         :return: None
         """
         self.duration += time.time() - self.pause_time
+
+    def should_go_down(self) -> bool:
+        """
+        Returns if the piece should go down
+        :return: bool
+        """
+        go_down = time.time() > self.next_go_down
+
+        if go_down is True:
+            # if true, set the next go down time.
+            self.next_go_down = time.time() + 1 / self.speed
+
+        # return if the piece should go down.
+        return go_down

@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import List, TYPE_CHECKING
 
+from copy import deepcopy
+
 if TYPE_CHECKING:
     from classes.matrix import Matrix
 
@@ -27,11 +29,16 @@ class Piece:
 
         self.shape = shape
 
+        # the shape of the piece when displayed in the next piece area
+        # this should NOT be edited
+        self.display_shape = deepcopy(shape)
+
     def reset(self):
         self.x = 5
         self.y = 0
+        self.shape = deepcopy(self.display_shape)
 
-    def place(self):
+    def place(self, mult: int = 1) -> None:
         """
         Place the piece in the matrix. Then, the Cases of the matrix will be colored.
         :return:
@@ -41,7 +48,7 @@ class Piece:
         # coords are the coordinates of the top left corner of the piece
         for y in range(len(self.shape)):
             for x in range(len(self.shape[y])):
-                self.matrix.grid[self.y + y][self.x + x] += self.shape[y][x]
+                self.matrix.grid[self.y + y][self.x + x] += self.shape[y][x] * mult
 
                 # if there is a piece in this case, we color it
                 if self.shape[y][x] != 0:
@@ -58,20 +65,28 @@ class Piece:
         # place the piece in the matrix
         self.place()
 
-    def right(self) -> None:
+    def right(self, cancel_move=False) -> None:
         """
         Move the piece right.
         :return: None
         """
+
+        if cancel_move:
+            self.place(mult=-1)
+
         self.x += 1
 
         self.place()
 
-    def left(self) -> None:
+    def left(self, cancel_move=False) -> None:
         """
         Move the piece left.
         :return: None
         """
+
+        if cancel_move:
+            self.place(mult=-1)
+
         self.x -= 1
 
         self.place()
@@ -85,7 +100,8 @@ class Piece:
         :return: None
         """
 
-        self.shape = list(zip(*self.shape[::-1]))
+        self.shape = list(zip(*self.shape))[::-1]
+
 
         self.place()
 
@@ -97,6 +113,6 @@ class Piece:
         :return: None
         """
 
-        self.shape = list(zip(*self.shape))[::-1]
+        self.shape = list(zip(*self.shape[::-1]))
 
         self.place()

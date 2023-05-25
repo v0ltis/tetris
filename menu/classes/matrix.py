@@ -6,6 +6,7 @@ from classes.piece import Piece
 
 from copy import deepcopy
 
+
 class Matrix:
     """
     Represents a matrix Object.
@@ -18,6 +19,7 @@ class Matrix:
     Be aware of the retuned values of the methods, they are used to check if the piece can move.
     If a piece is marked as "placed", it means that it can't move anymore. Moving it again could (and would) cause an index error.
     """
+
     def __init__(self):
         # generate the matrix
         self.grid = self._constructor()
@@ -74,7 +76,6 @@ class Matrix:
                     to go through another piece or the wall or floor wich is illegal.
         :return: True if the piece is illegal, False otherwise
         """
-        if any(2 in row for row in self.grid) : print("ATTENTION")
         return any(2 in row for row in self.grid)
 
     def loose(self):
@@ -99,11 +100,13 @@ class Matrix:
             if all(case.value == 1 for case in self.grid[row_number]) and row_number != 26:
                 removed += 1
                 del self.grid[row_number]
-                self.grid.insert(4, [Case(1)] + [Case(0)] * 10 + [Case(1)])
+                self.grid.insert(4, [Case(1)] + [Case(0) for _ in range(10)] + [Case(1)])
+
+        self.last_grid = deepcopy(self.grid)
 
         return removed
 
-    def check_move(self) -> bool:
+    def check_move(self, edit_matr=True) -> bool:
         """
         Check if the move is legal, if so, return True and update the last legal grid.
         If the move is illegal, return False and update the grid to the last legal grid.
@@ -111,8 +114,9 @@ class Matrix:
         """
         if self.illegal():
 
-            self.grid = deepcopy(self.last_legal)
-            self.last_grid = deepcopy(self.last_legal)
+            if edit_matr:
+                self.grid = deepcopy(self.last_legal)
+                self.last_grid = deepcopy(self.last_legal)
 
             return False
 
@@ -143,7 +147,7 @@ class Matrix:
 
         return is_accepted, self.check_full(), self.game_matrix()
 
-    def horizontal(self, function: Callable) -> Tuple[bool, int, List[List[Case]]]:
+    def horizontal(self, function: Callable, cancel_function: Callable) -> Tuple[bool, int, List[List[Case]]]:
         """
         Move the piece horizontally, if the move is illegal, then the piece is placed at the last legal position.
 
@@ -155,11 +159,10 @@ class Matrix:
 
         function()
 
-        is_accepted = self.check_move()
+        is_accepted = self.check_move(edit_matr=False)
 
         if not is_accepted:
-            # the grid is now the last legal grid
-            self.grid = deepcopy(self.last_legal)
+            cancel_function(cancel_move=True)
 
             return is_accepted, 0, self.game_matrix()
 
@@ -171,12 +174,9 @@ class Matrix:
         :param piece:
         :return: if the move has been accepted, the number of rows deleted, and the game matrix.
         """
-        accepted, count, matrix = self.horizontal(piece.right)
+        accepted, count, matrix = self.horizontal(piece.right, piece.left)
 
-        if not accepted:
-            piece.left()
-
-        return accepted, 0, self.game_matrix()
+        return True, 0, self.game_matrix()
 
     def left(self, piece: Piece):
         """
@@ -184,12 +184,12 @@ class Matrix:
         :param piece:
         :return: if the move has been accepted, the number of rows deleted, and the game matrix.
         """
-        accepted, count, matrix = self.horizontal(piece.left)
+        accepted, count, matrix = self.horizontal(piece.left, piece.right)
 
         if not accepted:
-            piece.right()
+            piece.right(cancel_move=True)
 
-        return accepted, 0, self.game_matrix()
+        return True, 0, self.game_matrix()
 
     def down(self, piece: Piece) -> Tuple[bool, int, List[List[Case]]]:
         """
@@ -217,12 +217,12 @@ class Matrix:
         :param piece: the piece to move
         :return: if the move has been accepted, the number of rows deleted, and the game matrix.
         """
-        while not self.check_move():
+        while self.check_move():
             piece.down()
 
-        self.last_grid = deepcopy(self.grid)
+        self.grid = deepcopy(self.last_legal)
 
-        return True, self.check_full(), self.game_matrix()
+        return False, self.check_full(), self.game_matrix()
 
     def game_matrix(self) -> List[List[Case]]:
         """

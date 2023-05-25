@@ -3,8 +3,7 @@ from pygame import mixer
 import sys
 import os
 sys.path.append(os.getcwd())
-print(sys.path)
-print(os.getcwd())
+
 from interfaces.main_menu import Menu
 
 

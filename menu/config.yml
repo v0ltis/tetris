@@ -53,6 +53,37 @@ shapes:
             [ 0, 1, 0 ]
             ]
 
+    # New pieces
+
+    -
+        color: [0, 17, 255]
+        scheme: [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]     # slash
+            ]
+
+    -
+        color: [255, 255, 255]
+        scheme: [
+            [0, 1, 0],
+            [1, 1, 1],
+            [0, 1, 0]   # + sign
+            ]
+
+    -
+        color: [0, 255, 154]
+        scheme: [
+            [1, 1, 0],
+            [0, 1, 0],
+            [0, 1, 1]    # long z
+            ]
+    -
+        color: [98, 52, 0]
+        scheme: [
+            [1, 0, 1],
+            [1, 1, 1],  # U
+            ]
 
 
 gamemodes:
@@ -70,7 +101,7 @@ gamemodes:
         name: "Invisible"
         id: "invisible"
         default_speed: 1
-        speed_multiplier: 1.30
+        speed_multiplier: 1.25
         max_speed: 7
         speed_increment_every: 12
         shapes: [0, 1, 2, 3, 4, 5, 6]
@@ -81,7 +112,7 @@ gamemodes:
         name: "Blitz"
         id: "blitz"
         default_speed: 1.2
-        speed_multiplier: 1.10
+        speed_multiplier: 1.12
         max_speed: 25
         speed_increment_every: 1
         shapes: [0, 1, 2, 3, 4, 5, 6]

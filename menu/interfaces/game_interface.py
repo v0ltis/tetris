@@ -17,6 +17,8 @@ class GameInterface:
         font_path = os.path.dirname(sys.argv[0]) + "/font/upheavtt.ttf"
         self.font = pygame.font.Font(font_path, 40)
 
+        self.is_ended = False
+
     def display_tetris_text(self, font, script: str, coord: tuple, color):
         text = font.render(script, True, color)
         text_rect = text.get_rect()
@@ -30,7 +32,7 @@ class GameInterface:
         # Initialize the interface
         self.init_display()
 
-        while True:
+        while not self.is_ended:
             self.display_grid()
 
             # Prevent text from overlapping
@@ -50,7 +52,12 @@ class GameInterface:
                 if not is_not_placed:
                     self.gamemode.next_round()
 
+                    self.is_ended = self.matrix.loose()
+
             self.controll()
+
+        # Fonction après la perte:
+        DeathScreen(self.gamemode).process()
 
     # TODO: CONNECT THE GAMEMODE CLASS TO THE INTERFACE, SO THE GAMEMODE LOGIC IS EXECUTED IN THE WHILE LOOP
 
@@ -69,7 +76,6 @@ class GameInterface:
         self.display_tetris_text(self.font, "Score", (475, 650), (255,255,255))
 
     # Draw the grid and the actual piece
-    # TODO: DOCUMENTATION!!!!!!!!!!!!!!!!!!!
     def display_grid(self):
         grid = self.matrix.game_matrix()
         for x in range(22):
@@ -118,16 +124,19 @@ class GameInterface:
                     self.matrix.rotate(piece)
 
                 elif event.key == pygame.K_DOWN:
-                    is_not_placed, _, _ = self.matrix.down(piece)
+                    is_not_placed, rows, _ = self.matrix.down(piece)
 
                 elif event.key == pygame.K_SPACE:
-                    is_not_placed, _, _ = self.matrix.drop(piece)
+                    is_not_placed, rows, _ = self.matrix.drop(piece)
 
                 elif event.key == pygame.K_ESCAPE:
                     return "pause"
 
                 if is_not_placed is False:
+                    self.gamemode.add_score(rows)
                     self.gamemode.next_round()
+                    self.is_ended = self.matrix.loose()
+
 
             elif event.type == pygame.QUIT:
                 pygame.quit()

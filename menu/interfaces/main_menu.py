@@ -28,6 +28,7 @@ class Menu:
         # Initialize the music player:
         self.mixer.music.load(music_path)
         self.mixer.music.set_volume(0.5)
+        #self.mixer.music.set_volume(0)
         # -1 means that the music will loop
         self.mixer.music.play(-1)
 

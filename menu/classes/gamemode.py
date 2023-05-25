@@ -55,6 +55,8 @@ class Gamemode:
 
         self.next_go_down = 0
 
+        self.loose = False
+
     def start(self) -> None:
         """
         Starts the gamemode
@@ -126,3 +128,24 @@ class Gamemode:
 
         # return if the piece should go down.
         return go_down
+
+    def add_score(self, rows):
+        """
+        Add points depending on the number of rows deleted
+
+        0 rows = 0 points
+        1 row = 40 points
+        2 rows = 100 points
+        3 rows = 300 points
+        4 rows = 1200 points
+        :param rows:
+        :return:
+        """
+
+        self.score += {
+            0: 0,
+            1: 40,
+            2: 100,
+            3: 300,
+            4: 1200
+        }[rows]

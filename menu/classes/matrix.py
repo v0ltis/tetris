@@ -60,7 +60,6 @@ class Matrix:
 
         return matrix
 
-
     def _print(self):
         """
         Print the matrix.
@@ -113,6 +112,7 @@ class Matrix:
         if self.illegal():
 
             self.grid = deepcopy(self.last_legal)
+            self.last_grid = deepcopy(self.last_legal)
 
             return False
 

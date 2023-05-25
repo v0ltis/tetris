@@ -45,6 +45,8 @@ class Piece:
         for y in range(len(self.shape)):
             for x in range(len(self.shape[y])):
                 self.matrix.grid[self.y + y][self.x + x] += self.shape[y][x]
+                if self.shape[y][x] != 0:
+                    self.matrix.grid[self.y + y][self.x + x].color = self.color
 
     def right(self) -> None:
         """

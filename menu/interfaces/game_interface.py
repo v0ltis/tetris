@@ -38,14 +38,13 @@ class GameInterface:
 
         while True:
             self.display_grid()
-            pygame.draw.rect(self.screen, (0,0,0), pygame.Rect(400, 675, 150, 50 ))
+            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(400, 675, 150, 50))
             self.display_tetris_text(self.font, str(self.gamemode.get_score()), (475, 700), (255,255,255))
-            pygame.draw.rect(self.screen, (0,0,0), pygame.Rect(400, 575, 150, 50 ))
+            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(400, 575, 150, 50))
             self.display_tetris_text(self.font, str(int(self.gamemode.get_time())), (475, 600), (255,255,255))
-            self.matrix.down(self.gamemode.actual_piece)
             pygame.display.flip()
             sleep(0.2)
-            self.controll_down()
+            self.control_down()
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -54,10 +53,9 @@ class GameInterface:
     # TODO: CONNECT THE GAMEMODE CLASS TO THE INTERFACE, SO THE GAMEMODE LOGIC IS EXECUTED IN THE WHILE LOOP
 
     # Draw the grid and the actual piece
+    # TODO: DOCUMENTATION!!!!!!!!!!!!!!!!!!!
     def display_grid(self):
         grid = self.matrix.game_matrix()
-        print(self.matrix.grid)# Pour tests
-        print("\n\n\n" + "=" * 10 + "\n\n\n")
         for x in range(22):
             for y in range(10):
                 box = grid[x][y]
@@ -65,10 +63,11 @@ class GameInterface:
                 case_y = 30 + y*31
                 pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
                 if box == 1:
-                    pygame.draw.rect(self.screen, self.gamemode.actual_piece.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
+                    pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
 
-    def controll_down(self):
-        grid = self.matrix.game_matrix()
-        for y in range(10):
-            if grid[21][y] == 1:
-                self.gamemode.next_round()
+    def control_down(self):
+        # if the piece is placed
+        can_still_be_moved, _, _ = self.matrix.down(self.gamemode.actual_piece)
+        # if the piece is placed, we go to the next round.
+        if not can_still_be_moved:
+            self.gamemode.next_round()

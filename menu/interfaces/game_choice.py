@@ -41,7 +41,7 @@ class GameChoice(MenuHeritage):
         )
 
         button_quit = Button(
-            coords=(150, 700), height=50, width=300, font=self.menu.button_font,
+            coords=(330, 550), height=200, width=250, font=self.menu.button_font,
             text="Quit", funct=self.quit_function, screen=self.menu.screen
         )
 

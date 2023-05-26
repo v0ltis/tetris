@@ -5,7 +5,6 @@ from classes.button import Button
 import os
 import sys
 
-
 class DeathScreen:
 
     def __init__(self, gamemode: Gamemode):
@@ -51,7 +50,7 @@ class DeathScreen:
             self.display_tetris_text(self.font, "Enter you name: ", (300, 300), (255, 255, 255))
             color = (72, 72, 72)
             pygame.draw.rect(self.screen, color, pygame.Rect(300, 350, 100, 100))
-
+            input_active = False
             for event in pygame.event.get():
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.input_active = True

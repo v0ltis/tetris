@@ -60,8 +60,6 @@ class GameInterface:
         # Fonction après la perte:
         DeathScreen(self.gamemode).process()
 
-    # TODO: CONNECT THE GAMEMODE CLASS TO THE INTERFACE, SO THE GAMEMODE LOGIC IS EXECUTED IN THE WHILE LOOP
-
     def init_display(self):
         pygame.init()
         self.screen = pygame.display.set_mode((600, 800))
@@ -84,11 +82,16 @@ class GameInterface:
                 box = grid[x][y]
                 case_x = 100 + x*31 
                 case_y = 30 + y*31
-                pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
+                pygame.draw.rect(self.screen, (128, 128, 128), pygame.Rect(case_y, case_x, 29.5, 29.5))
                 # If the value on the grid equal 1, apply the color of the piece
                 if box == 1:
+
+                    # If the gamemode is set to invisible
                     if self.gamemode.invisible_pieces:
-                        pygame.draw.rect(self.screen, self.gamemode.actual_piece.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
+                        # If the box color is the same as the falling's one
+                        if box.color == self.gamemode.actual_piece.color:
+                            pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
+
                     else:
                         pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
 

@@ -222,12 +222,16 @@ class Matrix:
         :param piece: the piece to move
         :return: if the move has been accepted, the number of rows deleted, and the game matrix.
         """
-        while self.check_move():
-            piece.down()
 
-        #self.grid = deepcopy(self.last_legal)
+        accepted = self.check_move()
+        rows = 0
 
-        return False, self.check_full(), self.game_matrix()
+        while accepted:
+            accepted, rows, _ = self.down(piece)
+
+        self.last_legal = deepcopy(self.grid)
+
+        return False, rows, self.game_matrix()
 
     def game_matrix(self) -> List[List[Case]]:
         """

@@ -225,7 +225,7 @@ class Matrix:
         while self.check_move():
             piece.down()
 
-        self.grid = deepcopy(self.last_legal)
+        #self.grid = deepcopy(self.last_legal)
 
         return False, self.check_full(), self.game_matrix()
 

@@ -14,6 +14,8 @@ class DeathScreen:
         font_path = os.path.dirname(sys.argv[0]) + "/font/upheavtt.ttf"
         self.font = pygame.font.Font(font_path, 40)
 
+        self.objects = []
+
     def display_tetris_text(self, font, script: str, coord: tuple, color):
         text = font.render(script, True, color)
         text_rect = text.get_rect()
@@ -32,15 +34,10 @@ class DeathScreen:
             text="Quit", funct=self.quit_function, screen=self.screen
         )
 
-        self.objects = [button_quit]
-
-        self.text_enter = ""
-        self.input_active = True
+        self.objects.append(button_quit)
+        text = ""
 
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.quit_function()
 
             # Display the score you made
             self.display_tetris_text(self.font, "Your score: ", (300, 200), (255, 255, 255))
@@ -49,22 +46,28 @@ class DeathScreen:
             # You can enter your name
             self.display_tetris_text(self.font, "Enter you name: ", (300, 300), (255, 255, 255))
             color = (72, 72, 72)
-            pygame.draw.rect(self.screen, color, pygame.Rect(300, 350, 100, 100))
-            input_active = False
-            for event in pygame.event.get():
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    self.input_active = True
-                    self.text_enter = ""
-                elif event.type == pygame.KEYDOWN and input_active:
-                    if event.key == pygame.K_RETURN:
-                        input_active = False
-                    elif event.key == pygame.K_BACKSPACE:
-                        self.text_enter =  self.text_enter[:-1]
-                    else:
-                        self.text_enter += event.unicode
 
-            self.display_tetris_text(self.font, self.text_enter, (300, 350), (255, 255, 255))
-            print(self.text_enter)
+            pygame.draw.rect(self.screen, color, pygame.Rect(10, 325, 580, 50))
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    self.quit_function()
+
+                elif event.type == pygame.KEYDOWN:
+
+                    # Check for backspace
+                    if event.key == pygame.K_BACKSPACE:
+
+                        # get text input from 0 to -1 i.e. end.
+                        text = text[:-1]
+
+                    # Unicode standard is used for string
+                    # formation
+                    else:
+                        if len(text) < 20:
+                            text += event.unicode
+
+            self.display_tetris_text(self.font, text, (300, 350), (255, 255, 255))
 
             # Button to go see the scoreboard ?
 

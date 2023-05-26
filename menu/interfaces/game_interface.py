@@ -88,8 +88,7 @@ class GameInterface:
                 # If the value on the grid equal 1, apply the color of the piece
                 if box == 1:
                     if self.gamemode.invisible_pieces:
-                        if box.color == self.gamemode.actual_piece.color:
-                            pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
+                        pygame.draw.rect(self.screen, self.gamemode.actual_piece.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
                     else:
                         pygame.draw.rect(self.screen, box.color, pygame.Rect(case_y, case_x, 29.5, 29.5))
 

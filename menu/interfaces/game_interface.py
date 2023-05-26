@@ -50,7 +50,7 @@ class GameInterface:
             if self.gamemode.should_go_down():
                 is_not_placed, _, _ = self.matrix.down(self.gamemode.actual_piece)
 
-                if not is_not_placed:
+                if is_not_placed is False:
                     self.gamemode.next_round()
 
                     self.is_ended = self.matrix.loose()

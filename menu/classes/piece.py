@@ -20,7 +20,7 @@ class Piece:
     """
 
     def __init__(self, color, shape: List[List[int]], matrix: Matrix):
-        self.color = color # 0xRRGGBB color format (hexadecimal)
+        self.color = color
 
         self.x = 5
         self.y = 0
@@ -102,7 +102,6 @@ class Piece:
 
         self.shape = list(zip(*self.shape))[::-1]
 
-
         self.place()
 
     def unrotate(self) -> None:
@@ -112,6 +111,8 @@ class Piece:
         DO NOT CALL THIS FUNCTION DIRECTLY, USE matrix.rotate() INSTEAD.
         :return: None
         """
+
+        self.place(mult=-1)
 
         self.shape = list(zip(*self.shape[::-1]))
 

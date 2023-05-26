@@ -51,14 +51,14 @@ class Matrix:
         matrix = []
         for i in range(4):
             # generate the piece spawning area with walls on each side
-            matrix.append([Case(1)] + [Case(-2) for _ in range(10)] + [Case(1)])
+            matrix.append([Case(1)] + [Case(-2) for _ in range(10)] + [Case(1) for _ in range(3)])
 
         for i in range(22):
             # generate the game area with walls on each side
-            matrix.append([Case(1)] + [Case(0) for _ in range(10)] + [Case(1)])
+            matrix.append([Case(1)] + [Case(0) for _ in range(10)] + [Case(1) for _ in range(3)])
 
         # generate the floor
-        matrix.append([Case(1) for _ in range(12)])
+        matrix.append([Case(1) for _ in range(15)])
 
         return matrix
 
@@ -100,7 +100,7 @@ class Matrix:
             if all(case.value == 1 for case in self.grid[row_number]) and row_number != 26:
                 removed += 1
                 del self.grid[row_number]
-                self.grid.insert(4, [Case(1)] + [Case(0) for _ in range(10)] + [Case(1)])
+                self.grid.insert(4, [Case(1)] + [Case(0) for _ in range(10)] + [Case(1) for _ in range(3)])
 
         self.last_grid = deepcopy(self.grid)
 
@@ -115,6 +115,7 @@ class Matrix:
         if self.illegal():
 
             if edit_matr:
+
                 self.grid = deepcopy(self.last_legal)
                 self.last_grid = deepcopy(self.last_legal)
 
@@ -135,13 +136,15 @@ class Matrix:
         :return: if the rotation has been accepted, the number of rows deleted, and the game matrix.
         """
         piece.rotate()
-        is_accepted = self.check_move()
+        is_accepted = self.check_move(edit_matr=False)
 
         if not is_accepted:
-            # the grid is now the last legal grid
-            self.grid = deepcopy(self.last_legal)
 
             piece.unrotate()
+            self.grid = deepcopy(self.last_legal)
+            self.check_move(edit_matr=False)
+
+
 
             return is_accepted, 0, self.game_matrix()
 
@@ -162,7 +165,12 @@ class Matrix:
         is_accepted = self.check_move(edit_matr=False)
 
         if not is_accepted:
+
             cancel_function(cancel_move=True)
+
+            self.grid = deepcopy(self.last_legal)
+
+            self.check_move(edit_matr=False)
 
             return is_accepted, 0, self.game_matrix()
 
@@ -185,9 +193,6 @@ class Matrix:
         :return: if the move has been accepted, the number of rows deleted, and the game matrix.
         """
         accepted, count, matrix = self.horizontal(piece.left, piece.right)
-
-        if not accepted:
-            piece.right(cancel_move=True)
 
         return True, 0, self.game_matrix()
 

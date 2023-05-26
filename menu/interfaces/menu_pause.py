@@ -63,3 +63,7 @@ class PauseMenu(MenuHeritage):
         text_rect.center = coord
 
         self.screen.blit(text, text_rect)
+
+    def quit_function(self):
+        self.pygame.quit()
+        print("Merci d'avoir joué")

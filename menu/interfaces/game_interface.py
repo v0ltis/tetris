@@ -4,7 +4,7 @@ from classes.gamemode import Gamemode
 import os
 import sys
 from interfaces.death_screen import DeathScreen
-#from classes.game_logic import GameLogic
+from interfaces.menu_pause import PauseMenu
 
 
 class GameInterface:
@@ -131,13 +131,13 @@ class GameInterface:
                     is_not_placed, rows, _ = self.matrix.drop(piece)
 
                 elif event.key == pygame.K_ESCAPE:
-                    return "pause"
+                    self.gamemode.pause()
+                    PauseMenu(GameInterface, self.matrix, self.gamemode).process()
 
                 if is_not_placed is False:
                     self.gamemode.add_score(rows)
                     self.gamemode.next_round()
                     self.is_ended = self.matrix.loose()
-
 
             elif event.type == pygame.QUIT:
                 pygame.quit()

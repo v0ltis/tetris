@@ -115,6 +115,9 @@ class Gamemode:
         """
         self.duration += time.time() - self.pause_time
 
+        # + 0.4 seconds in order to not penalise the player after pausing
+        self.next_go_down = time.time() + (0.8 + 1 / self.speed)
+
     def should_go_down(self) -> bool:
         """
         Returns if the piece should go down

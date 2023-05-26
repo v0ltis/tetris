@@ -15,7 +15,7 @@ class GameInterface:
         self.matrix = matrix
 
         # Load the fonts:
-        font_path = os.path.dirname(sys.argv[0]) + "/font/upheavtt.ttf"
+        font_path = sys.path[0] + "/font/upheavtt.ttf"
         self.font = pygame.font.Font(font_path, 40)
 
         self.is_ended = False

@@ -223,8 +223,7 @@ class Matrix:
         :return: if the move has been accepted, the number of rows deleted, and the game matrix.
         """
 
-        accepted = self.check_move()
-        rows = 0
+        accepted, rows, _ = self.down(piece)
 
         while accepted:
             accepted, rows, _ = self.down(piece)

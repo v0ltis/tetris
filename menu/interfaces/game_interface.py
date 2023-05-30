@@ -58,6 +58,9 @@ class GameInterface:
             self.controll()
 
         # Fonction après la perte:
+        # we now stop the timer
+        self.gamemode.pause()
+
         DeathScreen(self.gamemode).process()
 
     def init_display(self):

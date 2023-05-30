@@ -1,5 +1,5 @@
 server:
-    host: None
+    host: "http://hydrogen.cloud.voltis.me:3630"
 
 shapes:
     -

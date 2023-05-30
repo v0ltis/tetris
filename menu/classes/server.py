@@ -15,7 +15,7 @@ class Server:
 
         self.host = cnf['server']['host']
 
-    def send_stats(self, name: str, score: int, date: datetime, gamemode: int, duration: datetime) -> None:
+    def send_stats(self, name: str, score: int, date: datetime, gamemode: str, duration: int) -> bool:
         """
         Send the stats to the server
 
@@ -24,7 +24,7 @@ class Server:
         :param date: The date of the game
         :param gamemode: The ID of the gamemode
         :param duration: The duration of the game
-        :return: None
+        :return: bool, corresponding to the success of the request
         """
         if not 0 < len(name) < 26:
             raise ValueError("Name must be between 1 and 25 characters long")
@@ -32,30 +32,49 @@ class Server:
         data = {
             "name": name,
             "score": score,
-            "date": date.strftime("%Y-%m-%d %H:%M:%S"),
+            "date": datetime.timestamp(date),
             "gamemode": gamemode,
-            "duration": duration.strftime("%H:%M:%S")
+            "duration": duration
         }
 
-        requests.post(self.host + "/api/submit", data=data)
+        try:
+            req = requests.post(self.host + "/api/submit", data=data)
 
-    def get_stats(self, count:int, starting:int, gamemode:int = -1):
+            if req.status_code != 200:
+                return False
+            else:
+                return True
+
+        except requests.exceptions.ConnectionError:
+            return False
+
+    def get_stats(self, quantity: int, offset: int, gamemode: str = "all"):
         """
         Get the stats from the server
-        :param count: The number of stats to get (between 1 and 50)
-        :param starting: The starting index (0 is the first)
-        :param gamemode: The gamemode to get the stats from (-1 for al)
+        :param quantity: The number of stats to get (between 1 and 50)
+        :param offset: The starting index (0 is the first)
+        :param gamemode: The gamemode to get the stats from
         :return:
         """
-        if not 0 < count < 51:
+        if not 0 < quantity < 51:
             raise ValueError("Count must be between 1 and 50")
         
         data = {
-            "count": count,
-            "starting": starting,
+            "quantity": quantity,
+            "offset": offset,
             "gamemode": gamemode
         }
 
-        return requests.get(self.host + "/api/get", data=data).json()
-    
+        try:
+            resp = requests.get(self.host + "/api/get", data=data)
+
+            if resp.status_code != 202:
+                return False
+
+            else:
+                return resp.json()
+
+        except requests.exceptions.ConnectionError:
+            return False
+
     

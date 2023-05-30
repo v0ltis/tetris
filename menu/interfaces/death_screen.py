@@ -4,6 +4,7 @@ from classes.button import Button
 #from classes.text_entry import TextEntry
 import os
 import sys
+import time
 
 class DeathScreen:
 
@@ -14,7 +15,11 @@ class DeathScreen:
         font_path = sys.path[0] + "/font/upheavtt.ttf"
         self.font = pygame.font.Font(font_path, 40)
 
+        self.error_font = pygame.font.Font(font_path, 30)
+
         self.objects = []
+
+        self.server = Server()
 
     def display_tetris_text(self, font, script: str, coord: tuple, color):
         text = font.render(script, True, color)

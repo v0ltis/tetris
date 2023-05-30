@@ -38,14 +38,14 @@ class Server:
         }
 
         try:
-            req = requests.post(self.host + "/api/submit", data=data)
+            req = requests.post(self.host + "/scores", json=data)
 
-            if req.status_code != 200:
+            if req.status_code != 202:
                 return False
             else:
                 return True
 
-        except requests.exceptions.ConnectionError:
+        except requests.exceptions.ConnectionError as e:
             return False
 
     def get_stats(self, quantity: int, offset: int, gamemode: str = "all"):
@@ -66,9 +66,9 @@ class Server:
         }
 
         try:
-            resp = requests.get(self.host + "/api/get", data=data)
+            resp = requests.get(self.host + "/scores", json=data)
 
-            if resp.status_code != 202:
+            if resp.status_code != 200:
                 return False
 
             else:

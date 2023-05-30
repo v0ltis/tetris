@@ -99,7 +99,7 @@ gamemodes:
         xp_multiplier: 1
     -
         name: "One Color"
-        id: "invisible"
+        id: "one_color"
         default_speed: 1
         speed_multiplier: 1.3
         max_speed: 8

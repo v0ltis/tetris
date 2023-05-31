@@ -93,7 +93,6 @@ class DeathScreen:
         print("Merci d'avoir joué")
 
     def send(self):
-        print(self.text)
 
         # Resume allow us to update the timer, and take in count the pause time when
         # writing username
@@ -103,17 +102,22 @@ class DeathScreen:
 
         success = self.server.send_stats(name=self.text, score=self.gamemode.get_score(), date=datetime.now(), gamemode=self.gamemode.id, duration=timer)
 
-        #if not success:
-        if True:
-            print("faut attendre 10 secs")
-
+        if not success:
             pygame.draw.rect(self.screen, (72, 72, 72), pygame.Rect(10, 650, 580, 115))
             self.display_tetris_text(self.font, "Une erreur est survenue", (300, 675), (255, 255, 255))
             self.display_tetris_text(self.font, "lors de l'envoi de vos", (300, 705), (255, 255, 255))
             self.display_tetris_text(self.font, "statistiques au serveur.", (300, 735), (255, 255, 255))
-            pygame.display.flip()
 
-            time.sleep(5)
+
+            wait_time = time.time() + 5
+
+            while time.time() < wait_time:
+                for event in pygame.event.get():
+                    if event.type == pygame.QUIT:
+                        self.quit_function()
+
+                pygame.display.flip()
+
 
         Scoreboard(self.gamemode).process()
 

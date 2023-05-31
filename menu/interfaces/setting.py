@@ -2,6 +2,7 @@ import pygame
 import sys
 from classes.button import Button
 from interfaces.menu_heritage_sample import MenuHeritage
+from interfaces.credits import Credits
 
 
 class Settings(MenuHeritage):
@@ -29,6 +30,11 @@ class Settings(MenuHeritage):
             text="Save", funct=self.save, screen=self.menu.screen
         )
 
+        button_credits = Button(
+            coords=(150, 500), height=50, width=300, font=self.font,
+            text="Credits", funct=self.credits, screen=self.menu.screen
+        )
+
         button_play = Button(
             coords=(150, 675), height=50, width=300, font=self.menu.button_font,
             text="Play", funct=self.menu.game, screen=self.menu.screen
@@ -39,7 +45,7 @@ class Settings(MenuHeritage):
             text="Quit", funct=self.quit_function, screen=self.menu.screen
         )
 
-        self.menu.objects = [button_play, button_quit, button_save]
+        self.menu.objects = [button_play, button_quit, button_save, button_credits]
         self.text = ""
 
         while True:
@@ -77,3 +83,6 @@ class Settings(MenuHeritage):
 
     def save(self):
         self.menu.mixer.music.set_volume(float(self.text))
+
+    def credits(self):
+        Credits.process(self)

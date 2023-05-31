@@ -15,7 +15,7 @@ def start():
     screen = pygame.display.set_mode((600, 800))
 
     # Load the fonts:
-    print(sys.path)
+
     font_path = sys.path[0] + "/font/upheavtt.ttf"
     font = pygame.font.Font(font_path, 100)
     btn_font = pygame.font.Font(font_path, 40)

@@ -88,7 +88,12 @@ class Scoreboard:
 
                     username = user["username"]
                     score = str(user["score"])
-                    duration = str(int(user["duration"])) # We remove the .0 at the end
+                    duration = int(user["duration"]) # We remove the .0 at the end
+                    if duration >= 60:
+                        duration = str(int(duration) // 60) + " m " + str(int(duration) % 60)
+
+                    else:
+                        duration = str(duration) + " s"
 
                     raw_timestamp = user["date"] # Date format: YYYY-MM-DDTHH:MM:SS
 

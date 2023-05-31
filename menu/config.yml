@@ -1,5 +1,5 @@
 server:
-    host: "http://hydrogen.cloud.voltis.me:3630"
+    host: "https://tetris.cloud.voltis.me"
 
 shapes:
     -

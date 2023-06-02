@@ -228,7 +228,6 @@ class Matrix:
         while accepted:
             accepted, rows, _ = self.down(piece)
 
-        self.last_legal = deepcopy(self.grid)
 
         return False, rows, self.game_matrix()
 

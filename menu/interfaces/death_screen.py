@@ -100,7 +100,8 @@ class DeathScreen:
         self.gamemode.resume()
 
         timer = self.gamemode.get_time()
-        if not self.text.isspace() or self.text != "":
+
+        if not (self.text.isspace() or self.text == ""):
             success = self.server.send_stats(name=self.text, score=self.gamemode.get_score(), date=datetime.now(), gamemode=self.gamemode.id, duration=timer)
 
             if not success:

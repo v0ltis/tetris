@@ -26,8 +26,8 @@ class Server:
         :param duration: The duration of the game
         :return: bool, corresponding to the success of the request
         """
-        if not 0 < len(name) < 26:
-            raise ValueError("Name must be between 1 and 25 characters long")
+        if not 0 < len(name) < 14:
+            raise ValueError("Name must be between 1 and 13 characters long")
 
         data = {
             "name": name,

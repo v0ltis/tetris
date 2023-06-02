@@ -49,6 +49,7 @@ class Gamemode:
 
         self.actual_piece: Piece = None
         self.next_piece: Piece = None
+        self.holded_piece = None
         self.avail_piece_list: list = self.pieces.copy()
         random.shuffle(self.avail_piece_list)
         # We generate pieces
@@ -68,6 +69,21 @@ class Gamemode:
         self.duration = time.time()
 
         self.next_go_down = time.time() + (0.4 + 1 / self.speed)
+
+    def hold_piece(self):
+
+        if self.holded_piece is None:
+            self.holded_piece = self.actual_piece
+            self.next_piece_setter()
+
+        else:
+            self.holded_piece, self.actual_piece = self.actual_piece, self.holded_piece
+            self.actual_piece.reset()
+            self.actual_piece.x = 3
+            self.actual_piece.y = 0
+
+        return self.holded_piece
+
 
     def next_round(self) -> None:
         """

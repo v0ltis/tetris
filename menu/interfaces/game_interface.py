@@ -109,6 +109,15 @@ class GameInterface:
                 if next_piece.display_shape[x][y] == 1:
                     pygame.draw.rect(self.screen, next_piece.color, pygame.Rect(430 + 31 * x, 130 + 31 * y, 29.5, 29.5))
 
+        # display the hold piece
+        pygame.draw.rect(self.screen, color_next, pygame.Rect(375, 325, 200, 150))
+        hold_piece = self.gamemode.holded_piece
+        if hold_piece is not None:
+            for x in range(len(hold_piece.display_shape)):
+                for y in range(len(hold_piece.display_shape[x])):
+                    if hold_piece.display_shape[x][y] == 1:
+                        pygame.draw.rect(self.screen, hold_piece.color, pygame.Rect(430 + 31 * x, 355 + 31 * y, 29.5, 29.5))
+
     def controll(self):
 
         piece = self.gamemode.actual_piece
@@ -137,6 +146,10 @@ class GameInterface:
                 elif event.key == pygame.K_ESCAPE:
                     self.gamemode.pause()
                     PauseMenu(GameInterface, self.matrix, self.gamemode).process()
+
+                elif event.key == pygame.K_RCTRL:
+                    piece = self.gamemode.hold_piece()
+                    self.matrix.hold()
 
                 if is_not_placed is False:
                     self.gamemode.add_score(rows)

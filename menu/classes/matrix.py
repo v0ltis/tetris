@@ -144,8 +144,6 @@ class Matrix:
             self.grid = deepcopy(self.last_legal)
             self.check_move(edit_matr=False)
 
-
-
             return is_accepted, 0, self.game_matrix()
 
         return is_accepted, self.check_full(), self.game_matrix()
@@ -182,7 +180,7 @@ class Matrix:
         :param piece:
         :return: if the move has been accepted, the number of rows deleted, and the game matrix.
         """
-        accepted, count, matrix = self.horizontal(piece.right, piece.left)
+        self.horizontal(piece.right, piece.left)
 
         return True, 0, self.game_matrix()
 
@@ -192,7 +190,7 @@ class Matrix:
         :param piece:
         :return: if the move has been accepted, the number of rows deleted, and the game matrix.
         """
-        accepted, count, matrix = self.horizontal(piece.left, piece.right)
+        self.horizontal(piece.left, piece.right)
 
         return True, 0, self.game_matrix()
 
@@ -229,6 +227,16 @@ class Matrix:
             accepted, rows, _ = self.down(piece)
 
         return False, rows, self.game_matrix()
+
+    def hold(self):
+        """
+        Called when piece is holded. Sipmly force update the last legal grid.
+        :return: the held piece.
+        """
+
+        self.last_legal = deepcopy(self.grid)
+
+        self.grid = deepcopy(self.last_grid)
 
     def game_matrix(self) -> List[List[Case]]:
         """

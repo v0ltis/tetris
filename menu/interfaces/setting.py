@@ -28,7 +28,7 @@ class Settings(MenuHeritage):
 
         button_command = Button(
             coords=(150, 100), height=50, width=300, font=self.font,
-            text="Command", funct=self.command, screen=self.menu.screen
+            text="Commands", funct=self.command, screen=self.menu.screen
         )
 
         button_save = Button(

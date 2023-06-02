@@ -17,7 +17,7 @@ class GameChoice(MenuHeritage):
 
         basic_mode = Button(
             coords=(20, 50), height=200, width=250, font=self.menu.button_font,
-            text="Classic Mode", funct=lambda: GamemodeLauncher(0).launch(), screen=self.menu.screen
+            text="Classic", funct=lambda: GamemodeLauncher(0).launch(), screen=self.menu.screen
         )
 
         hard_mode = Button(

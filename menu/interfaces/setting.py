@@ -3,6 +3,7 @@ import sys
 from classes.button import Button
 from interfaces.menu_heritage_sample import MenuHeritage
 from interfaces.credits import Credits
+from interfaces.command import Command
 
 
 class Settings(MenuHeritage):
@@ -25,6 +26,11 @@ class Settings(MenuHeritage):
         self.menu.screen = pygame.display.set_mode((600, 800))
         pygame.display.set_caption("triste")
 
+        button_command = Button(
+            coords=(150, 100), height=50, width=300, font=self.font,
+            text="Command", funct=self.command, screen=self.menu.screen
+        )
+
         button_save = Button(
             coords=(150, 400), height=50, width=300, font=self.font,
             text="Save", funct=self.save, screen=self.menu.screen
@@ -45,7 +51,7 @@ class Settings(MenuHeritage):
             text="Quit", funct=self.quit_function, screen=self.menu.screen
         )
 
-        self.menu.objects = [button_play, button_quit, button_save, button_credits]
+        self.menu.objects = [button_play, button_quit, button_save, button_credits, button_command]
         self.text = ""
 
         while True:
@@ -89,3 +95,6 @@ class Settings(MenuHeritage):
 
     def credits(self):
         Credits.process(self)
+
+    def command(self):
+        Command.process(self)

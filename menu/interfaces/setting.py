@@ -70,7 +70,7 @@ class Settings(MenuHeritage):
 
                     # Unicode standard is used for string
                     # formation
-                    else:
+                    elif event.unicode in ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "."]:
                         if len(self.text) < 3:
                             self.text += event.unicode
 
@@ -82,7 +82,10 @@ class Settings(MenuHeritage):
             pygame.display.flip()
 
     def save(self):
-        self.menu.mixer.music.set_volume(float(self.text))
+        try:
+            self.menu.mixer.music.set_volume(float(self.text))
+        except:
+            print("Could not change volume.")
 
     def credits(self):
         Credits.process(self)

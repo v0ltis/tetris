@@ -94,9 +94,9 @@ class Scoreboard:
                 # côté serveur
 
                 self.display_tetris_text(self.sfont, "Nom", (20, 200), (255, 255, 255), left=True)
-                self.display_tetris_text(self.sfont, "Score", (150, 200), (255, 255, 255), left=True)
-                self.display_tetris_text(self.sfont, "Durée", (250, 200), (255, 255, 255), left=True)
-                self.display_tetris_text(self.sfont, "Date", (350, 200), (255, 255, 255), left=True)
+                self.display_tetris_text(self.sfont, "Score", (185, 200), (255, 255, 255), left=True)
+                self.display_tetris_text(self.sfont, "Durée", (285, 200), (255, 255, 255), left=True)
+                self.display_tetris_text(self.sfont, "Date", (385, 200), (255, 255, 255), left=True)
 
                 for i in range(len(self.users)):
                     user = self.users[i]
@@ -121,10 +121,10 @@ class Scoreboard:
                     # cf: https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
                     date = datetime_object.strftime("%d/%m/%Y, %H:%M:%S")
 
-                    self.display_tetris_text(self.sfont, username, (20, 200 + (40 * (i+1) )), (255, 255, 255), left=True)
-                    self.display_tetris_text(self.sfont, score, (150, 200 + (40 * (i+1))), (255, 255, 255), left=True)
-                    self.display_tetris_text(self.sfont, duration, (250, 200 + (40 * (i+1) )), (255, 255, 255), left=True)
-                    self.display_tetris_text(self.sfont, date, (350, 200 + (40 * (i+1) )), (255, 255, 255), left=True)
+                    self.display_tetris_text(self.sfont, username, (20, 200 + (40 * (i+1))), (255, 255, 255), left=True)
+                    self.display_tetris_text(self.sfont, score, (185, 200 + (40 * (i+1))), (255, 255, 255), left=True)
+                    self.display_tetris_text(self.sfont, duration, (285, 200 + (40 * (i+1))), (255, 255, 255), left=True)
+                    self.display_tetris_text(self.sfont, date, (378, 200 + (40 * (i+1))), (255, 255, 255), left=True)
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

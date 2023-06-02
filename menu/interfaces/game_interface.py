@@ -37,12 +37,12 @@ class GameInterface:
 
             # Prevent text from overlapping
             # this one is the score
-            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(400, 675, 150, 50))
-            self.display_tetris_text(self.font, str(self.gamemode.get_score()), (475, 700), (255, 255, 255))
+            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(400, 725, 150, 50))
+            self.display_tetris_text(self.font, str(self.gamemode.get_score()), (475, 750), (255, 255, 255))
 
             # and this one is the time
-            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(400, 575, 150, 50))
-            self.display_tetris_text(self.font, str(int(self.gamemode.get_time())), (475, 600), (255,255,255))
+            pygame.draw.rect(self.screen, (0, 0, 0), pygame.Rect(400, 625, 150, 50))
+            self.display_tetris_text(self.font, str(int(self.gamemode.get_time())), (475, 650), (255,255,255))
             pygame.display.flip()
             sleep(0.2)
 
@@ -70,11 +70,13 @@ class GameInterface:
         # next-piece rectangle
         color_next = (72, 72, 72)
         pygame.draw.rect(self.screen, color_next, pygame.Rect(375, 100, 200, 150))
+        pygame.draw.rect(self.screen, color_next, pygame.Rect(375, 325, 200, 150))
 
         # texts
         self.display_tetris_text(self.font, "NEXT PIECE", (475, 275), (255,255,255))
-        self.display_tetris_text(self.font, "Time", (475, 550), (255,255,255))
-        self.display_tetris_text(self.font, "Score", (475, 650), (255,255,255))
+        self.display_tetris_text(self.font, "Hold Piece", (475, 500), (255,255,255))
+        self.display_tetris_text(self.font, "Time", (475, 600), (255,255,255))
+        self.display_tetris_text(self.font, "Score", (475, 700), (255,255,255))
 
     # Draw the grid and the actual piece
     def display_grid(self):

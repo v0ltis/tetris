@@ -5,9 +5,15 @@ from classes.server import Server
 from classes.gamemode import Gamemode
 from datetime import datetime
 
+
 class Scoreboard:
 
     def __init__(self, gamemode: Gamemode):
+
+        # In order to prevent circular imports:
+        from interfaces.game_choice import GameChoice
+
+        self.GameChoice = GameChoice
 
         font_path = sys.path[0] + "/font/upheavtt.ttf"
 
@@ -15,6 +21,8 @@ class Scoreboard:
         self.sfont = pygame.font.Font(font_path, 20)
 
         self.font = pygame.font.Font(font_path, 40)
+
+        self.button_font = pygame.font.Font(font_path, 40)
 
         self.gamemode = gamemode
 
@@ -54,6 +62,13 @@ class Scoreboard:
         self.pygame.init()
         self.screen = pygame.display.set_mode((600, 800))
         pygame.display.set_caption("Triste")
+
+        button_replay = Button(
+            coords=(150, 625), height=50, width=300, font=self.font,
+            text="Play Again", funct=lambda: self.GameChoice(self).process(), screen=self.screen
+        )
+
+        self.objects.append(button_replay)
 
         button_quit = Button(
             coords=(150, 700), height=50, width=300, font=self.font,
@@ -110,7 +125,6 @@ class Scoreboard:
                     self.display_tetris_text(self.sfont, score, (150, 200 + (40 * (i+1))), (255, 255, 255), left=True)
                     self.display_tetris_text(self.sfont, duration, (250, 200 + (40 * (i+1) )), (255, 255, 255), left=True)
                     self.display_tetris_text(self.sfont, date, (350, 200 + (40 * (i+1) )), (255, 255, 255), left=True)
-
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:

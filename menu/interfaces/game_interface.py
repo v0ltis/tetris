@@ -1,7 +1,6 @@
 import pygame
 from time import sleep
 from classes.gamemode import Gamemode
-import os
 import sys
 from interfaces.death_screen import DeathScreen
 from interfaces.menu_pause import PauseMenu

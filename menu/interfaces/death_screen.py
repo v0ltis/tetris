@@ -7,6 +7,7 @@ from datetime import datetime
 import sys
 import time
 
+
 class DeathScreen:
 
     def __init__(self, gamemode: Gamemode):
@@ -108,7 +109,6 @@ class DeathScreen:
             self.display_tetris_text(self.font, "lors de l'envoi de vos", (300, 705), (255, 255, 255))
             self.display_tetris_text(self.font, "statistiques au serveur.", (300, 735), (255, 255, 255))
 
-
             wait_time = time.time() + 5
 
             while time.time() < wait_time:
@@ -118,6 +118,4 @@ class DeathScreen:
 
                 pygame.display.flip()
 
-
         Scoreboard(self.gamemode).process()
-

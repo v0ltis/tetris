@@ -47,8 +47,12 @@ class Gamemode:
         self.round = 0
         self.duration = None
 
-        self.actual_piece: Piece = random.choice(self.pieces)
-        self.next_piece: Piece = random.choice(self.pieces)
+        self.actual_piece: Piece = None
+        self.next_piece: Piece = None
+        self.avail_piece_list: list = self.pieces.copy()
+        random.shuffle(self.avail_piece_list)
+        # We generate pieces
+        self.next_piece_setter()
 
         self.pause_time = None
 
@@ -82,9 +86,27 @@ class Gamemode:
                 self.speed = self.max_speed
 
         # reset x & y pointers.
-        self.actual_piece.reset()
+        self.next_piece_setter()
+
+    def next_piece_setter(self):
+
+        # if the list is empty, we refill it
+        if self.avail_piece_list == []:
+            self.avail_piece_list: list = self.pieces.copy()
+            random.shuffle(self.avail_piece_list)
+
+        if self.next_piece is None:
+            self.next_piece = self.avail_piece_list.pop()
+
         self.actual_piece = self.next_piece
-        self.next_piece = random.choice(self.pieces)
+        self.actual_piece.reset()
+
+        # if the list is empty, we refill it
+        if self.avail_piece_list == []:
+            self.avail_piece_list: list = self.pieces.copy()
+            random.shuffle(self.avail_piece_list)
+
+        self.next_piece = self.avail_piece_list.pop()
 
     def get_time(self) -> float:
         """

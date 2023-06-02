@@ -61,7 +61,7 @@ class Menu:
         )
 
     def display_tetris_text(self):
-        text = self.font.render("TETRIS", True, (255, 255, 255))
+        text = self.font.render("TRISTE", True, (255, 255, 255))
         text_rect = text.get_rect()
         text_rect.center = (300, 100)
 

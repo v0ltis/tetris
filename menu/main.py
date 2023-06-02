@@ -22,7 +22,7 @@ def start():
 
     # Initialize the menu:
     menu = Menu(pygame, mixer, screen, font, btn_font)
-    menu.load("Tetris", sys.path[0] + "/music/NewTristeSound.mp3")
+    menu.load("Triste", sys.path[0] + "/music/NewTristeSound.mp3")
 
     # Main loop:
     menu.start()

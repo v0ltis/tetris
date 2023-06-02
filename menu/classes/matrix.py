@@ -228,7 +228,6 @@ class Matrix:
         while accepted:
             accepted, rows, _ = self.down(piece)
 
-
         return False, rows, self.game_matrix()
 
     def game_matrix(self) -> List[List[Case]]:

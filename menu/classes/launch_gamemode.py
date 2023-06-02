@@ -30,9 +30,7 @@ class GamemodeLauncher:
             speed_increment_every=raw_gamemode["speed_increment_every"],
             max_speed=raw_gamemode["max_speed"],
             pieces=list_pieces,
-            invisible_pieces=bool(raw_gamemode["invisible"]),
-            xp_multiplier=raw_gamemode["xp_multiplier"]
-        )
+            invisible_pieces=bool(raw_gamemode["invisible"]))
 
     def launch(self):
         self.gamemode.start()

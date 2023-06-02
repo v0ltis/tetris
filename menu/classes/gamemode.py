@@ -21,8 +21,7 @@ class Gamemode:
 
     def __init__(self, name: str, id: int,
                  default_speed: int, speed_multiplier: float, speed_increment_every: int, max_speed: int,
-                 pieces: List[Piece], invisible_pieces: bool = False, xp_multiplier: float = 1.0
-                 ):
+                 pieces: List[Piece], invisible_pieces: bool = False):
         """
         Creates & setup a gamemode
         :param name: The name of the gamemode

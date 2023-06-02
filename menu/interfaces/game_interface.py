@@ -116,7 +116,7 @@ class GameInterface:
 
             if event.type == pygame.KEYDOWN:
 
-                is_not_placed = None
+                is_not_placed = True
 
                 if event.key == pygame.K_LEFT:
                     self.matrix.left(piece)
@@ -140,6 +140,10 @@ class GameInterface:
                 if is_not_placed is False:
                     self.gamemode.add_score(rows)
                     self.gamemode.next_round()
+
+                    # we update to the new piece
+                    piece = self.gamemode.actual_piece
+
                     self.is_ended = self.matrix.loose()
 
             elif event.type == pygame.QUIT:

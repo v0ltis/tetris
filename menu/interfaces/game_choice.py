@@ -15,19 +15,19 @@ class GameChoice(MenuHeritage):
         self.menu.screen = pygame.display.set_mode((600, 800))
         pygame.display.set_caption("Triste")
 
-        one_piece = Button(
-            coords=(20, 50), height=200, width=250, font=self.menu.button_font,
-            text="One Piece", funct=lambda: GamemodeLauncher(3).launch(), screen=self.menu.screen
-        )
-
         basic_mode = Button(
-            coords=(20, 300), height=200, width=250, font=self.menu.button_font,
-            text="Basic Mode", funct=lambda: GamemodeLauncher(0).launch(), screen=self.menu.screen
+            coords=(20, 50), height=200, width=250, font=self.menu.button_font,
+            text="Classic Mode", funct=lambda: GamemodeLauncher(0).launch(), screen=self.menu.screen
         )
 
         hard_mode = Button(
-            coords=(330, 50), height=200, width=250, font=self.menu.button_font,
+            coords=(20, 300), height=200, width=250, font=self.menu.button_font,
             text="Blitz", funct=lambda: GamemodeLauncher(2).launch(), screen=self.menu.screen
+        )
+
+        one_piece = Button(
+            coords=(330, 50), height=200, width=250, font=self.menu.button_font,
+            text="One Piece", funct=lambda: GamemodeLauncher(3).launch(), screen=self.menu.screen
         )
 
         one_color = Button(

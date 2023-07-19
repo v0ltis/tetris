@@ -46,10 +46,10 @@ async def get_user_stats(
         )
         # Error 416: Requested Range Not Satisfiable (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/416)
 
-    elif len(data.username) > 25:
+    elif len(data.username) > 12:
         return Response(
             status_code=400,
-            content=f'{{"response":"The username must be between 1 and 25 characters included (actual length: {len(data.username)})"}}',
+            content=f'{{"response":"The username must be between 1 and 12 characters included (actual length: {len(data.username)})"}}',
             headers={"Content-Type": "application/json"}
         )
         # Error 400: Bad Request (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400)
@@ -115,10 +115,10 @@ async def add_score(
     :return: The response of the server
     """
 
-    if not 1 <= len(data.name) <= 25:
+    if not 1 <= len(data.name) <= 12:
         return Response(
             status_code=400,
-            content=f'{{"response":"The name must be between 1 and 25 characters included (actual length: {len(data.name)})"}}',
+            content=f'{{"response":"The name must be between 1 and 12 characters included (actual length: {len(data.name)})"}}',
             headers={"Content-Type": "application/json"}
         )
         # Error 400: Bad Request (https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/400)
